@@ -134,7 +134,7 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .sum-sub{font-size:14px;font-weight:400;color:#232424;line-height:20px;margin-bottom:14px;display:flex;align-items:center;gap:12px;background:#F3F5F5;border:1px solid #D4D6D6;border-radius:4px;padding:8px 16px}
 .sum-sub svg{flex-shrink:0;color:#44505C}
 .sp-cards{display:flex;gap:16px;align-items:flex-start}
-.sp-card{background:#fff;border:1px solid #F0F5F4;border-radius:8px;padding:16px;flex:1;min-width:0}
+.sp-card{background:#fff;border:1px solid #D4D6D6;border-radius:8px;padding:16px;flex:1;min-width:0}
 /* Outlet breakdown card */
 .ob-tbl{width:100%;border-collapse:collapse;margin-top:10px}
 .ob-th{font-size:10px;font-weight:700;color:#8A9099;text-transform:uppercase;letter-spacing:.04em;padding:0 3px 5px;white-space:nowrap}
@@ -234,7 +234,7 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .sp-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:600}
 .sp-tag.up{background:#DCFAF5;color:#00493E}
 .sp-tag.down{background:#FFE6E6;color:#B81919}
-.sp-card-body{display:flex;gap:28px;align-items:flex-start}
+.sp-card-body{display:flex;gap:28px;align-items:center}
 .sp-card-main,.sp-card-sec{display:flex;flex-direction:column;gap:3px}
 .sp-card-main .sp-val{font-size:30px;font-weight:700;color:#202121;line-height:1.1;letter-spacing:-0.5px}
 .sp-card-main .sp-lbl{font-size:12px;font-weight:400;color:#8A9099;line-height:16px}
@@ -309,9 +309,9 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .dr-bar-top{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
 .dr-bar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .dr-bar-sep{width:1px;height:20px;background:#E0E3E3;flex-shrink:0;margin:0 4px}
-.dr-bar-info{font-size:14px;color:#5C5E5E;line-height:20px;white-space:nowrap;margin-left:auto;padding-left:12px;border-left:1px solid #E0E3E3;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.dr-bar-info{font-size:14px;font-weight:600;color:#5C5E5E;line-height:20px;white-space:nowrap;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
 .dr-bar-info:empty{display:none}
-.dr-bar-top--wrapped .dr-bar-info{margin-left:0;padding-left:0;border-left:none;padding-top:2px;white-space:normal}
+.dr-bar-top--wrapped .dr-bar-info{padding-top:2px;white-space:normal}
 .dr-bar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 /* ── Graphs View dropdown (mirrors cmp-wrap style) ── */
 .gv-wrap{position:relative}
@@ -375,6 +375,7 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .sp-dl-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#434545}
 .sp-dl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 /* Meal performance combined chart */
+.mp-two{display:grid;grid-template-columns:2fr 3fr;gap:16px;align-items:stretch}
 .mp-legend{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:center;margin-top:16px;padding-top:14px;border-top:1px solid #F0F5F4}
 .mp-leg-item{display:flex;align-items:center;gap:6px;font-size:13px;color:#5C5E5E;white-space:nowrap}
 .mp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;display:inline-block}
@@ -598,6 +599,22 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .oc-search-ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#A8ADAD;pointer-events:none}
 .oc-search{padding:8px 12px 8px 34px;border:1px solid #D4D6D6;border-radius:6px;font-size:13px;color:#282D33;font-family:var(--font);outline:none;transition:border-color .15s;width:200px}
 .oc-search:focus{border-color:#008470}
+.gs-toolbar{display:flex;align-items:center;justify-content:flex-start;margin-top:16px;margin-bottom:12px}
+.gs-search-wrap{position:relative}
+.gs-search-ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#A8ADAD;pointer-events:none}
+.gs-search{padding:8px 12px 8px 34px;border:1px solid #D4D6D6;border-radius:6px;font-size:13px;color:#282D33;font-family:var(--font);outline:none;transition:border-color .15s;width:400px}
+.gs-search:focus{border-color:#008470}
+.gs-tbl-wrap{overflow-x:auto;margin-top:0}
+.gs-tbl{width:100%;border-collapse:collapse}
+.gs-tbl thead th{background:#F0F5F4;padding:10px 14px;font-size:11px;font-weight:700;color:#434545;white-space:nowrap;letter-spacing:.03em;text-transform:uppercase;text-align:left}
+.gs-tbl thead th:not(:first-child){text-align:right}
+.gs-tbl thead th:first-child{border-radius:4px 0 0 4px}
+.gs-tbl thead th:last-child{border-radius:0 4px 4px 0}
+.gs-tbl tbody td{padding:12px 14px;border-bottom:1px solid #F5F5F5;font-size:13px;color:#282D33;vertical-align:middle}
+.gs-tbl tbody tr:last-child td{border-bottom:none}
+.gs-tbl tbody tr:hover td{background:#FAFAFA}
+.gs-tbl tbody td:not(:first-child){text-align:right;font-weight:600}
+.gs-tbl-gross{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .oc-col-btn{padding:7px 14px;border:1px solid #D4D6D6;background:#fff;border-radius:6px;font-size:13px;font-weight:600;color:#44505C;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:var(--font)}
 .oc-col-btn:hover{background:#F5F5F5}
 /* Table */
@@ -1123,7 +1140,7 @@ const NAV=[
 ];
 
 const SALES_PATHS=new Set(['/analytics/sales/orders-sales','/analytics/sales/gross-sales','/analytics/sales/avg-order-value','/analytics/sales/meal-breakdown','/analytics/sales/avg-order-mealtime','/analytics/sales/hourly-daily']);
-const PATH_TO_SEC={'/analytics/sales/orders-sales':'sec-orders-sales','/analytics/sales/gross-sales':'sec-gross-sales','/analytics/sales/avg-order-value':'sec-avg-order','/analytics/sales/meal-breakdown':'sec-meal-perf','/analytics/sales/avg-order-mealtime':'sec-meal-perf','/analytics/sales/hourly-daily':'sec-hourly-daily'};
+const PATH_TO_SEC={'/analytics/sales/orders-sales':'sec-orders-sales','/analytics/sales/gross-sales':'sec-gross-sales','/analytics/sales/avg-order-value':'sec-avg-order','/analytics/sales/meal-breakdown':'sec-meal-breakdown','/analytics/sales/avg-order-mealtime':'sec-meal-aov','/analytics/sales/hourly-daily':'sec-hourly-daily'};
 const OPS_PATHS=new Set(['/analytics/ops-quality/partner-cancellations','/analytics/ops-quality/captain-wait-time','/analytics/ops-quality/outlet-performance','/analytics/ops-quality/order-prep-efficiency','/analytics/ops-quality/order-prep-breakdown','/analytics/ops-quality/avg-acceptance-time','/analytics/ops-quality/offline-time']);
 const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-efficiency':'sec-order-prep-eff','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept','/analytics/ops-quality/offline-time':'sec-offline'};
 const CUST_PATHS=new Set(['/analytics/customer/customer-breakdown','/analytics/customer/no-of-customers','/analytics/customer/ratings-food-orders','/analytics/customer/conversion-funnel','/analytics/customer/order-frequency','/analytics/customer/reorder-rate','/analytics/customer/impressions','/analytics/customer/discount-impact','/analytics/customer/retention']);
@@ -1360,7 +1377,7 @@ function oqFilter(period){
   const strip=document.getElementById('oq-strip-text');if(strip)strip.textContent=d.strip;
   const upd=document.getElementById('oq-updated');if(upd)upd.textContent=d.updated;
   const wrap=document.getElementById('oq-cards');if(!wrap)return;
-  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:13px;margin-top:0">${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('');
+  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('');
 }
 
 function sumFilter(period){
@@ -1370,7 +1387,7 @@ function sumFilter(period){
   const upd=document.getElementById('sum-updated');if(upd)upd.textContent=d.updated;
   const wrap=document.getElementById('sum-cards');if(!wrap)return;
   const obCard=`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">Outlet breakdown</span><button class="ob-view-all" onclick="obOpenModal()">View all <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><table class="ob-tbl"><thead><tr><th class="ob-th">Outlet</th><th class="ob-th">Orders</th><th class="ob-th">Sales</th><th class="ob-th">Avg</th></tr></thead><tbody>${d.ob.map(r=>`<tr><td class="ob-td"><span class="ob-nm">${r.name}</span></td><td class="ob-td">${r.orders}</td><td class="ob-td">${r.sales}</td><td class="ob-td">${r.avg}</td></tr>`).join('')}</tbody></table></div>`;
-  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:13px;margin-top:0">${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('')+obCard;
+  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('')+obCard;
 }
 
 function buildSalesPerf(){return`<div class="sp-page">
@@ -1398,8 +1415,9 @@ function buildSalesPerf(){return`<div class="sp-page">
       <div class="sp-range"><div class="sp-range-item active">Last 7 days</div><div class="sp-range-item">Last 30 days</div><div class="dr-input" onclick="drOpen(this)"><span class="dr-input-text">Start date</span><span class="dr-input-sep"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9.5 5.5l2.5 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dr-input-text">End date</span><span class="dr-input-ico"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.75" y="2.75" width="12.5" height="11.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.75 6.25h12.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 1.5v2.5M11 1.5v2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></div></div>
       <div class="dr-bar-sep"></div>
       <div class="gv-wrap"><div class="gv-trigger" onclick="gvToggle(this)">Graphs view:&nbsp;<span class="gv-label">Daily</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="gv-dropdown"><div class="gv-menu"><div class="gv-item selected" onclick="gvSelect(this)" data-label="Daily"><span class="cmp-rb"></span>Daily</div><div class="gv-item" onclick="gvSelect(this)" data-label="Weekly"><span class="cmp-rb"></span>Weekly</div><div class="gv-item" onclick="gvSelect(this)" data-label="Monthly"><span class="cmp-rb"></span>Monthly</div></div><div class="gv-footer"><button class="gv-reset" onclick="gvReset(this)">Reset</button><button class="gv-apply" onclick="gvApply(this)">Apply</button></div></div></div>
+      <div class="dr-bar-sep"></div>
+      <div class="dr-bar-info sp-compared"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5C5E5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.7"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Data shown for: 22 Apr – 28 Apr &nbsp;·&nbsp; Comparison period: 15 Apr – 21 Apr</div>
     </div>
-    <div class="dr-bar-info sp-compared">Data shown for: 22 Apr – 28 Apr &nbsp;·&nbsp; Comparison period: 15 Apr – 21 Apr</div>
   </div>
 </div>
 <div class="sp-card-lg sp-anchor" id="sec-orders-sales" data-path="/analytics/sales/orders-sales">
@@ -1440,29 +1458,72 @@ function buildSalesPerf(){return`<div class="sp-page">
     </div>
     <div class="sp-sec-right"><button class="sp-export-btn">Export</button><span style="font-size:14px;color:#5C5E5E">12 Jan – 11 Feb</span></div>
   </div>
-  <div class="sp-tbl-wrap"><table class="sp-tbl">
-    <thead><tr><th id="gs-col1">Outlet <span class="sp-sort">▲▼</span></th><th>Orders <span class="sp-sort">▲▼</span></th><th>Gross sales (AED) <span class="sp-sort">▲▼</span></th><th>Order contribution <span class="sp-sort">▲▼</span></th></tr></thead>
-    <tbody id="gs-tbody"></tbody>
-  </table></div>
+  <div class="gs-toolbar">
+    <div class="gs-search-wrap">
+      <span class="gs-search-ico"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M9 9L11.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+      <input class="gs-search" type="text" id="gs-search-inp" placeholder="Search…" oninput="gsDoSearch(this.value)">
+    </div>
+  </div>
+  <div class="gs-tbl-wrap">
+    <table class="gs-tbl" id="gs-tbl">
+      <thead><tr>
+        <th id="gs-col1">Outlet</th>
+        <th>Orders</th>
+        <th>Gross sales (AED)</th>
+        <th>Order contribution</th>
+      </tr></thead>
+      <tbody id="gs-tbody"></tbody>
+    </table>
+  </div>
   <div class="sp-pages"><span class="sp-pg-btn">‹</span><span class="sp-pg-btn active">1</span><span class="sp-pg-btn">2</span><span class="sp-pg-btn">3</span><span class="sp-pg-btn">4</span><span class="sp-pg-btn">5</span><span class="sp-pg-btn">›</span></div>
 </div>
 
-<div class="sp-card-lg sp-anchor" id="sec-meal-perf" data-path="/analytics/sales/meal-breakdown">
+<div class="mp-two">
+
+<div class="sp-card-lg sp-anchor" id="sec-meal-breakdown" data-path="/analytics/sales/meal-breakdown">
   <div class="sp-sec-top">
     <div class="sp-sec-left">
-      <div><div class="sp-sec-title">Meal performance by time</div><div class="sp-sec-sub">Orders and average order value across meal periods</div></div>
+      <div><div class="sp-sec-title">Meal breakdown</div><div class="sp-sec-sub">Breakdown of gross sales by meal time</div></div>
     </div>
     <div class="sp-sec-right"><button class="sp-export-btn">Export</button><span style="font-size:14px;color:#5C5E5E">12 Jan – 11 Feb</span></div>
   </div>
-  <div style="height:260px;margin-top:12px"><canvas id="chart-meal-perf"></canvas></div>
-  <div class="mp-legend">
-    <span class="mp-leg-item"><span class="mp-dot" style="background:#336D65"></span>Breakfast (6AM–11AM)</span>
-    <span class="mp-leg-item"><span class="mp-dot" style="background:#00E784;outline:1px solid #d0f5e3;outline-offset:1px"></span>Lunch (11AM–3PM)</span>
-    <span class="mp-leg-item"><span class="mp-dot" style="background:#334768"></span>Snack (3PM–7PM)</span>
-    <span class="mp-leg-item"><span class="mp-dot" style="background:#9DC9C3"></span>Dinner (7PM–11PM)</span>
-    <span class="mp-leg-item"><span class="mp-dot" style="background:#C8CACA;border:1.5px solid #B0B3B3"></span>Late night (11PM–6AM)</span>
-    <span class="mp-leg-item" style="margin-left:8px;padding-left:16px;border-left:1px solid #EAECED"><span class="mp-line-ico"></span>AOV (AED)</span>
+  <div class="sp-donut-wrap" style="margin-top:16px">
+    <div class="sp-donut-chart" style="width:180px;height:180px;flex-shrink:0"><canvas id="chart-meal-breakdown"></canvas></div>
+    <div class="sp-donut-legend">
+      <div class="sp-dl-item" style="align-items:flex-start">
+        <div class="sp-dl-dot" style="background:#336D65;margin-top:3px;flex-shrink:0"></div>
+        <div><div style="font-size:13px;font-weight:600;color:#232424">Breakfast (6AM–11AM)</div><div style="font-size:11px;color:#606161;margin-top:1px">1% of gross sales</div></div>
+      </div>
+      <div class="sp-dl-item" style="align-items:flex-start">
+        <div class="sp-dl-dot" style="background:#00E784;outline:1px solid #d0f5e3;outline-offset:1px;margin-top:3px;flex-shrink:0"></div>
+        <div><div style="font-size:13px;font-weight:600;color:#232424">Lunch (11AM–3PM)</div><div style="font-size:11px;color:#606161;margin-top:1px">35% of gross sales</div></div>
+      </div>
+      <div class="sp-dl-item" style="align-items:flex-start">
+        <div class="sp-dl-dot" style="background:#334768;margin-top:3px;flex-shrink:0"></div>
+        <div><div style="font-size:13px;font-weight:600;color:#232424">Snack (3PM–7PM)</div><div style="font-size:11px;color:#606161;margin-top:1px">25% of gross sales</div></div>
+      </div>
+      <div class="sp-dl-item" style="align-items:flex-start">
+        <div class="sp-dl-dot" style="background:#9DC9C3;margin-top:3px;flex-shrink:0"></div>
+        <div><div style="font-size:13px;font-weight:600;color:#232424">Dinner (7PM–11PM)</div><div style="font-size:11px;color:#606161;margin-top:1px">33% of gross sales</div></div>
+      </div>
+      <div class="sp-dl-item" style="align-items:flex-start">
+        <div class="sp-dl-dot" style="background:#C8CACA;border:1px solid #B0B3B3;margin-top:3px;flex-shrink:0"></div>
+        <div><div style="font-size:13px;font-weight:600;color:#232424">Late night (11PM–6AM)</div><div style="font-size:11px;color:#606161;margin-top:1px">6% of gross sales</div></div>
+      </div>
+    </div>
   </div>
+</div>
+
+<div class="sp-card-lg sp-anchor" id="sec-meal-aov" data-path="/analytics/sales/avg-order-mealtime">
+  <div class="sp-sec-top">
+    <div class="sp-sec-left">
+      <div><div class="sp-sec-title">Avg order value by mealtime</div><div class="sp-sec-sub">Average basket value by meal time based on gross sales</div></div>
+    </div>
+    <div class="sp-sec-right"><button class="sp-export-btn">Export</button><span style="font-size:14px;color:#5C5E5E">12 Jan – 11 Feb</span></div>
+  </div>
+  <div style="height:260px;margin-top:12px"><canvas id="chart-meal-aov"></canvas></div>
+</div>
+
 </div>
 
 <div class="sp-anchor" id="sec-hourly-daily" data-path="/analytics/sales/hourly-daily" style="scroll-margin-top:16px">
@@ -1517,8 +1578,9 @@ function buildOpsQuality(){
       <div class="sp-range"><div class="sp-range-item active">Last 7 days</div><div class="sp-range-item">Last 30 days</div><div class="dr-input" onclick="drOpen(this)"><span class="dr-input-text">Start date</span><span class="dr-input-sep"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9.5 5.5l2.5 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dr-input-text">End date</span><span class="dr-input-ico"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.75" y="2.75" width="12.5" height="11.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.75 6.25h12.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 1.5v2.5M11 1.5v2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></div></div>
       <div class="dr-bar-sep"></div>
       <div class="gv-wrap"><div class="gv-trigger" onclick="gvToggle(this)">Graphs view:&nbsp;<span class="gv-label">Daily</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="gv-dropdown"><div class="gv-menu"><div class="gv-item selected" onclick="gvSelect(this)" data-label="Daily"><span class="cmp-rb"></span>Daily</div><div class="gv-item" onclick="gvSelect(this)" data-label="Weekly"><span class="cmp-rb"></span>Weekly</div><div class="gv-item" onclick="gvSelect(this)" data-label="Monthly"><span class="cmp-rb"></span>Monthly</div></div><div class="gv-footer"><button class="gv-reset" onclick="gvReset(this)">Reset</button><button class="gv-apply" onclick="gvApply(this)">Apply</button></div></div></div>
+      <div class="dr-bar-sep"></div>
+      <div class="dr-bar-info sp-compared"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5C5E5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.7"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Data shown for: 22 Apr – 28 Apr</div>
     </div>
-    <div class="dr-bar-info sp-compared">Data shown for: 22 Apr – 28 Apr</div>
   </div>
 </div>
 <div class="oq-two">
@@ -1564,7 +1626,7 @@ function buildOpsQuality(){
 <div class="sp-card-lg sp-anchor" id="sec-defects" data-path="/analytics/ops-quality/captain-wait-time" style="scroll-margin-top:16px">
   <div class="sp-sec-top">
     <div class="sp-sec-left">
-      <div class="sp-sec-title">Captain wait time</div>
+      <div class="sp-sec-title">Captain wait time and % delayed orders</div>
     </div>
     <div class="sp-sec-right">
       <button class="sp-export-btn">Export</button>
@@ -1793,8 +1855,9 @@ function buildCustomerInsights(){return`<div class="sp-page">
       <div class="sp-range"><div class="sp-range-item active">Last 7 days</div><div class="sp-range-item">Last 30 days</div><div class="dr-input" onclick="drOpen(this)"><span class="dr-input-text">Start date</span><span class="dr-input-sep"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8M9.5 5.5l2.5 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="dr-input-text">End date</span><span class="dr-input-ico"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.75" y="2.75" width="12.5" height="11.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.75 6.25h12.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 1.5v2.5M11 1.5v2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></div></div>
       <div class="dr-bar-sep"></div>
       <div class="gv-wrap"><div class="gv-trigger" onclick="gvToggle(this)">Graphs view:&nbsp;<span class="gv-label">Daily</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="gv-dropdown"><div class="gv-menu"><div class="gv-item selected" onclick="gvSelect(this)" data-label="Daily"><span class="cmp-rb"></span>Daily</div><div class="gv-item" onclick="gvSelect(this)" data-label="Weekly"><span class="cmp-rb"></span>Weekly</div><div class="gv-item" onclick="gvSelect(this)" data-label="Monthly"><span class="cmp-rb"></span>Monthly</div></div><div class="gv-footer"><button class="gv-reset" onclick="gvReset(this)">Reset</button><button class="gv-apply" onclick="gvApply(this)">Apply</button></div></div></div>
+      <div class="dr-bar-sep"></div>
+      <div class="dr-bar-info sp-compared"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5C5E5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.7"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Data shown for: 12 Jan – 18 Jan</div>
     </div>
-    <div class="dr-bar-info sp-compared">Data shown for: 12 Jan – 18 Jan</div>
   </div>
 </div>
 
@@ -2161,31 +2224,36 @@ function initCharts(){
     {label:'Careem Plus',data:[35,40,38,42,36,45,41,39,43,44],borderColor:'#00E784',borderWidth:2,backgroundColor:'transparent',pointBackgroundColor:'#fff',pointBorderColor:'#00E784',pointBorderWidth:2,pointRadius:4,pointHoverRadius:6,fill:false,tension:0.4},
     {label:'Non Careem Plus',data:[65,62,67,63,68,64,66,68,65,62],borderColor:'#001942',borderWidth:2,backgroundColor:'transparent',pointBackgroundColor:'#fff',pointBorderColor:'#001942',pointBorderWidth:2,pointRadius:4,pointHoverRadius:6,fill:false,tension:0.4}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',align:'center',labels:{color:'#606161',font:{size:13,family:'var(--font)'},usePointStyle:true,pointStyle:'circle',padding:24,boxWidth:8,boxHeight:8}},tooltip:{mode:'index',intersect:false,callbacks:{label:i=>`${i.dataset.label}: ${i.raw}`}}},scales:{x:{grid:{color:'#F0F5F4'},border:{display:false},ticks:{color:'#5C5E5E',font:{size:12}}},y:{grid:{color:'#F0F5F4'},border:{display:false},ticks:{color:'#5C5E5E',font:{size:12},stepSize:25,callback:v=>`${v}`},min:0,max:100}}}})};
-  const cMp=document.getElementById('chart-meal-perf');
-  if(cMp){const mpCtx=cMp.getContext('2d');chartInstances['chart-meal-perf']=new Chart(mpCtx,{
+  // Meal breakdown donut
+  const cMb=document.getElementById('chart-meal-breakdown');
+  if(cMb){const mbCtx=cMb.getContext('2d');chartInstances['chart-meal-breakdown']=new Chart(mbCtx,{
+    type:'doughnut',
+    data:{
+      labels:['Breakfast','Lunch','Snack','Dinner','Late night'],
+      datasets:[{data:[1,35,25,33,6],
+        backgroundColor:['#336D65','#00E784','#334768','#9DC9C3','#C8CACA'],
+        borderWidth:0,hoverOffset:6}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>`${i.label}: ${i.raw}%`}}}}
+  })}
+  // Avg order value by mealtime bar chart
+  const cMa=document.getElementById('chart-meal-aov');
+  if(cMa){const maCtx=cMa.getContext('2d');chartInstances['chart-meal-aov']=new Chart(maCtx,{
+    type:'bar',
     data:{
       labels:['Breakfast\n6AM–11AM','Lunch\n11AM–3PM','Snack\n3PM–7PM','Dinner\n7PM–11PM','Late night\n11PM–6AM'],
-      datasets:[
-        {type:'bar',label:'Orders',data:[420,280,160,120,80],
-          backgroundColor:['#336D65','#00E784','#334768','#9DC9C3','#C8CACA'],
-          borderRadius:6,borderSkipped:false,barPercentage:0.55,categoryPercentage:0.7,yAxisID:'yOrders',order:2},
-        {type:'line',label:'AOV (AED)',data:[6.8,7.6,3.9,6.6,3.6],
-          borderColor:'#008470',backgroundColor:'transparent',borderWidth:2.5,
-          pointBackgroundColor:'#fff',pointBorderColor:'#008470',pointBorderWidth:2,
-          pointRadius:5,pointHoverRadius:7,tension:0.4,yAxisID:'yAOV',order:1}
-      ]
+      datasets:[{label:'AOV (AED)',data:[66,54,57,57,54],
+        backgroundColor:['#336D65','#00E784','#334768','#9DC9C3','#C8CACA'],
+        borderRadius:6,borderSkipped:false,barPercentage:0.55,categoryPercentage:0.7}]
     },
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},
-        tooltip:{mode:'index',intersect:false,callbacks:{label:i=>i.dataset.label==='Orders'?`Orders: ${i.raw}`:`AOV: AED ${i.raw}`}}},
+        tooltip:{callbacks:{label:i=>`AOV: AED ${i.raw}`}}},
       scales:{
         x:{grid:{display:false},border:{display:false},ticks:{color:'#5C5E5E',font:{size:12,family:'var(--font)'},maxRotation:0}},
-        yOrders:{type:'linear',position:'left',grid:{color:'#F0F5F4'},border:{display:false},
-          ticks:{color:'#5C5E5E',font:{size:12},stepSize:100},min:0,max:500,
-          title:{display:true,text:'Orders',color:'#8A9099',font:{size:11,family:'var(--font)'}}},
-        yAOV:{type:'linear',position:'right',grid:{drawOnChartArea:false},border:{display:false},
-          ticks:{color:'#008470',font:{size:12},callback:v=>`AED ${v}`},min:0,max:12,
-          title:{display:true,text:'Avg. order value',color:'#008470',font:{size:11,family:'var(--font)'}}}
+        y:{grid:{color:'#F0F5F4'},border:{display:false},
+          ticks:{color:'#5C5E5E',font:{size:12},callback:v=>`AED ${v}`},min:0,max:80}
       }
     }
   })}
@@ -4491,14 +4559,18 @@ go('/analytics/sales/orders-sales');
 // Outlets table for Orders/Sales card
 const OSS_METRICS={'kfc-marina':{orders:120,gross:1200,contrib:16},'kfc-jbr':{orders:4000,gross:40000,contrib:20},'kfc-difc':{orders:370,gross:2370,contrib:5},'kfc-yas':{orders:40,gross:240,contrib:2},'kfc-shj':{orders:180,gross:1800,contrib:12},'ph-marina':{orders:85,gross:950,contrib:8},'ph-moe':{orders:210,gross:2100,contrib:11},'hrd-jbr':{orders:95,gross:870,contrib:9},'herfy-d':{orders:30,gross:300,contrib:3},'pop-dm':{orders:220,gross:2200,contrib:15},'pop-ad':{orders:60,gross:600,contrib:4}};
 /* ── Gross sales breakdown tabs ── */
-const GS_ZONES=[{name:'Business Bay',orders:56,gross:1200,contrib:8},{name:'Dubai Marina',orders:150,gross:4000,contrib:12},{name:'JBR',orders:820,gross:9800,contrib:20},{name:'DIFC',orders:370,gross:2370,contrib:7},{name:'Downtown Dubai',orders:220,gross:2200,contrib:15},{name:'Al Barsha',orders:210,gross:2100,contrib:11},{name:'Media City',orders:79,gross:2370,contrib:5},{name:'Deira',orders:30,gross:300,contrib:3},{name:'Motor City',orders:6,gross:240,contrib:2},{name:'Internet City',orders:6,gross:180,contrib:1}];
-let gsSt={tab:0};
+const GS_ZONES=[{name:'Business Bay',orders:56,gross:1200,contrib:8,trend:{dir:'up',pct:'9%'}},{name:'Dubai Marina',orders:150,gross:4000,contrib:12,trend:{dir:'up',pct:'14%'}},{name:'JBR',orders:820,gross:9800,contrib:20,trend:{dir:'up',pct:'8%'}},{name:'DIFC',orders:370,gross:2370,contrib:7,trend:{dir:'down',pct:'3%'}},{name:'Downtown Dubai',orders:220,gross:2200,contrib:15,trend:{dir:'up',pct:'11%'}},{name:'Al Barsha',orders:210,gross:2100,contrib:11,trend:{dir:'down',pct:'6%'}},{name:'Media City',orders:79,gross:2370,contrib:5,trend:{dir:'down',pct:'4%'}},{name:'Deira',orders:30,gross:300,contrib:3,trend:{dir:'up',pct:'2%'}},{name:'Motor City',orders:6,gross:240,contrib:2,trend:{dir:'down',pct:'18%'}},{name:'Internet City',orders:6,gross:180,contrib:1,trend:{dir:'up',pct:'5%'}}];
+const GS_TREND_MAP={'kfc-marina':{dir:'up',pct:'12%'},'kfc-jbr':{dir:'up',pct:'8%'},'kfc-difc':{dir:'down',pct:'3%'},'kfc-yas':{dir:'down',pct:'15%'},'kfc-shj':{dir:'up',pct:'6%'},'ph-marina':{dir:'up',pct:'4%'},'ph-moe':{dir:'down',pct:'7%'},'hrd-jbr':{dir:'down',pct:'11%'},'herfy-d':{dir:'up',pct:'2%'},'pop-dm':{dir:'up',pct:'9%'},'pop-ad':{dir:'down',pct:'5%'}};
+const GS_BRAND_TREND={'kfc':{dir:'up',pct:'7%'},'ph':{dir:'down',pct:'4%'},'hardees':{dir:'down',pct:'11%'},'herfy-b':{dir:'up',pct:'2%'},'popeyes':{dir:'up',pct:'14%'}};
+let gsSt={tab:0,search:''};
 function gsFmt(n){if(n>=10000)return(n/1000).toFixed(0)+'k';if(n>=1000)return(n/1000).toFixed(1)+'k';return n.toLocaleString()}
 function gsTab(idx){
-  gsSt.tab=idx;
+  gsSt.tab=idx;gsSt.search='';
+  const inp=document.getElementById('gs-search-inp');if(inp)inp.value='';
   document.querySelectorAll('#gs-tabs .sp-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   gsRender();
 }
+function gsDoSearch(val){gsSt.search=val.toLowerCase();gsRender();}
 function gsRender(){
   const el=document.getElementById('gs-tbody');if(!el)return;
   const subs=['The distribution of Gross sales by outlets.','The distribution of Gross sales by brands.','The distribution of Gross sales by customer zones.'];
@@ -4506,19 +4578,24 @@ function gsRender(){
   let rows,col1;
   if(gsSt.tab===0){
     col1='Outlet';
-    rows=SD.outlets.map(o=>{const m=OSS_METRICS[o.id]||{orders:50,gross:500,contrib:3};return{name:o.name,orders:m.orders,gross:m.gross,contrib:m.contrib}}).sort((a,b)=>b.orders-a.orders);
+    rows=SD.outlets.map(o=>{const m=OSS_METRICS[o.id]||{orders:50,gross:500,contrib:3};return{name:o.name,orders:m.orders,gross:m.gross,contrib:m.contrib,trend:GS_TREND_MAP[o.id]||{dir:'up',pct:'5%'}}}).sort((a,b)=>b.orders-a.orders);
   }else if(gsSt.tab===1){
     col1='Brand';
     const bMap={};
     SD.outlets.forEach(o=>{const m=OSS_METRICS[o.id]||{orders:50,gross:500,contrib:3};if(!bMap[o.brand]){bMap[o.brand]={orders:0,gross:0}}bMap[o.brand].orders+=m.orders;bMap[o.brand].gross+=m.gross});
     const total=Object.values(bMap).reduce((s,v)=>s+v.orders,0);
-    rows=SD.brands.map(b=>{const v=bMap[b.id]||{orders:0,gross:0};return{name:b.name,orders:v.orders,gross:v.gross,contrib:total>0?Math.round(v.orders/total*100):0}}).sort((a,b)=>b.orders-a.orders);
+    rows=SD.brands.map(b=>{const v=bMap[b.id]||{orders:0,gross:0};return{name:b.name,orders:v.orders,gross:v.gross,contrib:total>0?Math.round(v.orders/total*100):0,trend:GS_BRAND_TREND[b.id]||{dir:'up',pct:'5%'}}}).sort((a,b)=>b.orders-a.orders);
   }else{
     col1='Customer zone';
     rows=[...GS_ZONES].sort((a,b)=>b.orders-a.orders);
   }
-  const col1El=document.getElementById('gs-col1');if(col1El)col1El.innerHTML=col1+' <span class="sp-sort">▲▼</span>';
-  el.innerHTML=rows.map(r=>`<tr><td>${r.name}</td><td>${gsFmt(r.orders)}</td><td>${gsFmt(r.gross)}</td><td>${r.contrib}%</td></tr>`).join('');
+  if(gsSt.search)rows=rows.filter(r=>r.name.toLowerCase().includes(gsSt.search));
+  const thEl=document.getElementById('gs-col1');if(thEl)thEl.textContent=col1;
+  el.innerHTML=rows.map(r=>{
+    const u=r.trend.dir==='up';
+    const trendHtml=`<span class="oq-vs ${u?'pos':'neg'}" style="font-size:12px;display:inline-flex;align-items:center;gap:2px;margin-top:0">${I[u?'arrowUp':'arrowDown']}${u?'+':'−'}${r.trend.pct}</span>`;
+    return`<tr><td>${r.name}</td><td>${gsFmt(r.orders)}</td><td><div class="gs-tbl-gross">${gsFmt(r.gross)}${trendHtml}</div></td><td>${r.contrib}%</td></tr>`;
+  }).join('');
 }
 let ossSortKey=null,ossSortDir=1;
 function ossRenderTbl(){
