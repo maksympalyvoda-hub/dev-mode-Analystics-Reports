@@ -1143,8 +1143,8 @@ const NAV=[
 
 const SALES_PATHS=new Set(['/analytics/sales/orders-sales','/analytics/sales/gross-sales','/analytics/sales/avg-order-value','/analytics/sales/meal-breakdown','/analytics/sales/avg-order-mealtime','/analytics/sales/hourly-daily']);
 const PATH_TO_SEC={'/analytics/sales/orders-sales':'sec-orders-sales','/analytics/sales/gross-sales':'sec-gross-sales','/analytics/sales/avg-order-value':'sec-avg-order','/analytics/sales/meal-breakdown':'sec-meal-breakdown','/analytics/sales/avg-order-mealtime':'sec-meal-aov','/analytics/sales/hourly-daily':'sec-hourly-daily'};
-const OPS_PATHS=new Set(['/analytics/ops-quality/partner-cancellations','/analytics/ops-quality/captain-wait-time','/analytics/ops-quality/outlet-performance','/analytics/ops-quality/order-prep-efficiency','/analytics/ops-quality/order-prep-breakdown','/analytics/ops-quality/avg-acceptance-time','/analytics/ops-quality/offline-time']);
-const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-efficiency':'sec-order-prep-eff','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept','/analytics/ops-quality/offline-time':'sec-offline'};
+const OPS_PATHS=new Set(['/analytics/ops-quality/partner-cancellations','/analytics/ops-quality/orders-with-defect','/analytics/ops-quality/captain-wait-time','/analytics/ops-quality/outlet-performance','/analytics/ops-quality/order-prep-efficiency','/analytics/ops-quality/order-prep-breakdown','/analytics/ops-quality/avg-acceptance-time','/analytics/ops-quality/offline-time']);
+const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/orders-with-defect':'sec-orders-defect','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-efficiency':'sec-order-prep-eff','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept','/analytics/ops-quality/offline-time':'sec-offline'};
 const CUST_PATHS=new Set(['/analytics/customer/customer-breakdown','/analytics/customer/no-of-customers','/analytics/customer/ratings-food-orders','/analytics/customer/conversion-funnel','/analytics/customer/order-frequency','/analytics/customer/reorder-rate','/analytics/customer/impressions','/analytics/customer/discount-impact','/analytics/customer/retention']);
 const PATH_TO_CUST_SEC={'/analytics/customer/customer-breakdown':'sec-cust-breakdown','/analytics/customer/no-of-customers':'sec-no-customers','/analytics/customer/ratings-food-orders':'sec-ratings','/analytics/customer/conversion-funnel':'sec-cust-funnel','/analytics/customer/order-frequency':'sec-order-freq','/analytics/customer/reorder-rate':'sec-reorder-rate','/analytics/customer/impressions':'sec-impressions','/analytics/customer/discount-impact':'sec-discount-impact','/analytics/customer/retention':'sec-retention'};
 
@@ -1642,6 +1642,71 @@ function buildOpsQuality(){
       <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#336D65"></div>Missing ingredient — 28 (32%)</div>
       <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#00E784"></div>Too many orders — 27 (31%)</div>
       <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#9DC9C3"></div>Item out of stock — 24 (28%)</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="oq-two">
+<div class="sp-card-lg sp-anchor" id="sec-orders-defect" data-path="/analytics/ops-quality/orders-with-defect" style="scroll-margin-top:16px">
+  <div class="sp-sec-top">
+    <div class="sp-sec-left">
+      <div><div class="sp-sec-title">Orders with defect</div><div class="sp-sec-sub">Orders where customer reported a defect</div></div>
+      <div class="sp-seg" style="margin-top:10px">
+        <div class="sp-seg-item active" onclick="owdSegSwitch(0)">Overall</div>
+        <div class="sp-seg-item" onclick="owdSegSwitch(1)">By outlet</div>
+      </div>
+    </div>
+    <div class="sp-sec-right">
+      <button class="sp-export-btn">Export</button>
+      <div class="oq-stat-row">
+        <div class="oq-kv"><div class="oq-kv-val">3.6%${tag('12%','up')}</div><div class="oq-kv-lbl">% of orders</div></div>
+        <div class="oq-kv"><div class="oq-kv-val"><span style="font-size:14px;font-weight:600">AED</span>&nbsp;2,157.9${tag('8%','up')}</div><div class="oq-kv-lbl">Amount refunded</div></div>
+      </div>
+    </div>
+  </div>
+  <div id="owd-overall">
+    <div class="sp-chart-wrap" style="height:240px"><canvas id="oq-chart-owd"></canvas></div>
+    <div class="mp-legend" style="margin-top:12px">
+      <span class="mp-leg-item"><span class="mp-dot" style="background:#334768"></span># Defective orders</span>
+      <span class="mp-leg-item"><span class="mp-line-ico"></span>% of orders</span>
+    </div>
+    <div class="sp-chart-footer">
+      <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
+      <div class="sp-legend-item"><div class="sp-legend-dot" style="background:#334768"></div>Orders with defect: 12 Jan – 11 Feb</div>
+    </div>
+  </div>
+  <div id="owd-by-outlet" style="display:none;margin-top:16px">
+    <table class="gs-tbl" style="width:100%">
+      <thead><tr>
+        <th>Outlet</th>
+        <th style="text-align:right"># Defective orders</th>
+        <th style="text-align:right">% of orders</th>
+        <th style="text-align:right">Amount refunded (AED)</th>
+        <th style="text-align:right">Trend</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><div style="font-weight:600;color:#232424">KFC Marina</div><div style="font-size:12px;color:#606161">OUT-4821 · Dubai Marina</div></td><td style="text-align:right">12</td><td style="text-align:right">3.2%</td><td style="text-align:right">486</td><td style="text-align:right"><span class="oq-vs pos" style="font-size:13px;display:inline-flex;align-items:center;gap:3px;justify-content:flex-end">${I.arrowDown}9%</span></td></tr>
+        <tr><td><div style="font-weight:600;color:#232424">KFC JBR</div><div style="font-size:12px;color:#606161">OUT-4822 · JBR</div></td><td style="text-align:right">18</td><td style="text-align:right">4.1%</td><td style="text-align:right">724</td><td style="text-align:right"><span class="oq-vs neg" style="font-size:13px;display:inline-flex;align-items:center;gap:3px;justify-content:flex-end">${I.arrowUp}6%</span></td></tr>
+        <tr><td><div style="font-weight:600;color:#232424">KFC DIFC</div><div style="font-size:12px;color:#606161">OUT-4823 · DIFC</div></td><td style="text-align:right">8</td><td style="text-align:right">2.8%</td><td style="text-align:right">312</td><td style="text-align:right"><span class="oq-vs pos" style="font-size:13px;display:inline-flex;align-items:center;gap:3px;justify-content:flex-end">${I.arrowDown}14%</span></td></tr>
+        <tr><td><div style="font-weight:600;color:#232424">KFC Yas Mall</div><div style="font-size:12px;color:#606161">OUT-5102 · Yas Island</div></td><td style="text-align:right">15</td><td style="text-align:right">3.7%</td><td style="text-align:right">589</td><td style="text-align:right"><span class="oq-vs pos" style="font-size:13px;display:inline-flex;align-items:center;gap:3px;justify-content:flex-end">${I.arrowDown}4%</span></td></tr>
+        <tr><td><div style="font-weight:600;color:#232424">KFC Sharjah City</div><div style="font-size:12px;color:#606161">OUT-5201 · City Centre</div></td><td style="text-align:right">22</td><td style="text-align:right">5.1%</td><td style="text-align:right">762</td><td style="text-align:right"><span class="oq-vs neg" style="font-size:13px;display:inline-flex;align-items:center;gap:3px;justify-content:flex-end">${I.arrowUp}11%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="sp-card-lg">
+  <div class="sp-sec-top">
+    <div class="sp-sec-left"><div class="sp-sec-title">Defect reasons</div><div style="font-size:13px;color:#5C5E5E">12 Jan – 11 Feb</div></div>
+    <button class="sp-export-btn">Export</button>
+  </div>
+  <div class="sp-donut-wrap" style="justify-content:flex-start">
+    <div class="sp-donut-chart" style="width:180px;height:180px"><canvas id="oq-chart-defect-donut"></canvas></div>
+    <div class="sp-donut-legend">
+      <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#334768"></div>Wrong item sent — 40%</div>
+      <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#00E784;outline:1px solid #d0f5e3;outline-offset:1px"></div>Missing item defects — 33%</div>
+      <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#336D65"></div>Instructions not followed — 3%</div>
+      <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#9DC9C3"></div>Poor food quality — 24%</div>
     </div>
   </div>
 </div>
@@ -2370,7 +2435,35 @@ function initOpsCharts(){
     chartInstances[id]=new Chart(el.getContext('2d'),{type:'doughnut',plugins:extraPlugins,data:{datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>counts?`${lbls[i.dataIndex]}: ${counts[i]} orders (${i.raw}%)`:`${lbls[i.dataIndex]}: ${i.raw}%`}}}}});
   };
   mkDonut('oq-chart-cancel-donut',[32,31,28],['#336D65','#00E784','#9DC9C3'],['Missing ingredient','Too many orders','Item out of stock'],[28,27,24]);
-  mkDonut('oq-chart-defect-donut',[32,31,28,5],['#336D65','#00E784','#9DC9C3','#334768'],['Missing item','Food quality','Instructions not followed','Wrong item'],[65,63,57,10]);
+  mkDonut('oq-chart-defect-donut',[40,33,3,24],['#334768','#00E784','#336D65','#9DC9C3'],['Wrong item sent','Missing item defects','Instructions not followed','Poor food quality']);
+  const owdEl=document.getElementById('oq-chart-owd');
+  if(owdEl){const owdCtx=owdEl.getContext('2d');chartInstances['oq-chart-owd']=new Chart(owdCtx,{
+    data:{
+      labels:OQ_DATES,
+      datasets:[
+        {type:'bar',label:'# Defective orders',data:[8,5,9,7,6,10,8,7,9,6],
+          backgroundColor:'#334768',borderRadius:4,borderSkipped:false,
+          barPercentage:0.55,categoryPercentage:0.7,yAxisID:'yCount',order:2},
+        {type:'line',label:'% of orders',data:[3.2,2.1,3.8,2.9,2.5,4.1,3.3,2.8,3.7,2.5],
+          borderColor:'#008470',backgroundColor:'transparent',borderWidth:2.5,
+          pointBackgroundColor:'#fff',pointBorderColor:'#008470',pointBorderWidth:2,
+          pointRadius:5,pointHoverRadius:7,tension:0.4,yAxisID:'yPct',order:1}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{mode:'index',intersect:false,callbacks:{label:i=>i.dataset.label==='# Defective orders'?`# Defective orders: ${i.raw}`:`% of orders: ${i.raw}%`}}},
+      scales:{
+        x:{grid:{color:'#F0F5F4'},border:{display:false},ticks:{color:'#5C5E5E',font:{size:12}}},
+        yCount:{type:'linear',position:'left',grid:{color:'#F0F5F4'},border:{display:false},
+          ticks:{color:'#5C5E5E',font:{size:12},stepSize:2},min:0,max:12,
+          title:{display:true,text:'# Orders',color:'#8A9099',font:{size:11,family:'var(--font)'}}},
+        yPct:{type:'linear',position:'right',grid:{drawOnChartArea:false},border:{display:false},
+          ticks:{color:'#008470',font:{size:12},callback:v=>`${v}%`},min:0,max:6,
+          title:{display:true,text:'% of orders',color:'#008470',font:{size:11,family:'var(--font)'}}}
+      }
+    }
+  })}
 }
 
 function initCustCharts(){
@@ -4647,6 +4740,15 @@ function acSegSwitch(idx){
   if(overall)overall.style.display=idx===0?'':'none';
   if(byOutlet)byOutlet.style.display=idx===1?'':'none';
   if(idx===0&&chartInstances['oq-chart-cancel'])setTimeout(()=>chartInstances['oq-chart-cancel'].resize(),0);
+}
+function owdSegSwitch(idx){
+  const sec=document.getElementById('sec-orders-defect');if(!sec)return;
+  sec.querySelectorAll('.sp-seg-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  const overall=document.getElementById('owd-overall');
+  const byOutlet=document.getElementById('owd-by-outlet');
+  if(overall)overall.style.display=idx===0?'':'none';
+  if(byOutlet)byOutlet.style.display=idx===1?'':'none';
+  if(idx===0&&chartInstances['oq-chart-owd'])setTimeout(()=>chartInstances['oq-chart-owd'].resize(),0);
 }
 
 // Compare dropdown — chart comparison logic
