@@ -1117,9 +1117,9 @@ const NAV=[
       ]},
       {id:'cust',lbl:'Customer insights',children:[
         {id:'cust-breakdown',lbl:'Customer breakdown',path:'/analytics/customer/customer-breakdown'},
+        {id:'cust-funnel',lbl:'Customer conversion funnel',path:'/analytics/customer/conversion-funnel'},
         {id:'no-customers',lbl:'No. of customers',path:'/analytics/customer/no-of-customers'},
         {id:'ratings',lbl:'Ratings on food orders',path:'/analytics/customer/ratings-food-orders'},
-        {id:'cust-funnel',lbl:'Customer conversion funnel',path:'/analytics/customer/conversion-funnel'},
         {id:'order-freq',lbl:'Order frequency',path:'/analytics/customer/order-frequency'},
         {id:'reorder-rate',lbl:'Reorder rate',path:'/analytics/customer/reorder-rate'},
         {id:'impressions',lbl:'Impressions & CTR',path:'/analytics/customer/impressions'},
@@ -1151,7 +1151,7 @@ const PATH_TO_SEC={'/analytics/sales/orders-sales':'sec-orders-sales','/analytic
 const OPS_PATHS=new Set(['/analytics/ops-quality/partner-cancellations','/analytics/ops-quality/orders-with-defect','/analytics/ops-quality/captain-wait-time','/analytics/ops-quality/outlet-performance','/analytics/ops-quality/order-prep-efficiency','/analytics/ops-quality/order-prep-breakdown','/analytics/ops-quality/avg-acceptance-time','/analytics/ops-quality/offline-time']);
 const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/orders-with-defect':'sec-orders-defect','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/offline-time':'sec-offline','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-efficiency':'sec-order-prep-eff','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept'};
 const CUST_PATHS=new Set(['/analytics/customer/customer-breakdown','/analytics/customer/no-of-customers','/analytics/customer/ratings-food-orders','/analytics/customer/conversion-funnel','/analytics/customer/order-frequency','/analytics/customer/reorder-rate','/analytics/customer/impressions','/analytics/customer/discount-impact','/analytics/customer/retention']);
-const PATH_TO_CUST_SEC={'/analytics/customer/customer-breakdown':'sec-cust-breakdown','/analytics/customer/no-of-customers':'sec-no-customers','/analytics/customer/ratings-food-orders':'sec-ratings','/analytics/customer/conversion-funnel':'sec-cust-funnel','/analytics/customer/order-frequency':'sec-order-freq','/analytics/customer/reorder-rate':'sec-reorder-rate','/analytics/customer/impressions':'sec-impressions','/analytics/customer/discount-impact':'sec-discount-impact','/analytics/customer/retention':'sec-retention'};
+const PATH_TO_CUST_SEC={'/analytics/customer/customer-breakdown':'sec-cust-breakdown','/analytics/customer/conversion-funnel':'sec-cust-funnel','/analytics/customer/no-of-customers':'sec-no-customers','/analytics/customer/ratings-food-orders':'sec-ratings','/analytics/customer/order-frequency':'sec-order-freq','/analytics/customer/reorder-rate':'sec-reorder-rate','/analytics/customer/impressions':'sec-impressions','/analytics/customer/discount-impact':'sec-discount-impact','/analytics/customer/retention':'sec-retention'};
 
 let activePath='/dashboard',openL1=null,openL2=null,chartInstances={},scrollSpyCleanup=null;
 
@@ -2021,55 +2021,6 @@ function buildCustomerInsights(){return`<div class="sp-page">
   </div>
 </div>
 
-<div class="sp-card-lg sp-anchor" id="sec-no-customers" data-path="/analytics/customer/no-of-customers" style="scroll-margin-top:16px">
-  <div class="ci-with-sidebar">
-    <div>
-      <div class="sp-sec-top">
-        <div class="sp-sec-left">
-          <div><div class="sp-sec-title">No. of customers</div><div class="sp-sec-sub">Number of unique customers who placed an order</div></div>
-          <div class="sp-tabs"><span class="sp-tab active">Overall</span><span class="sp-tab">New, retained, reactivated</span><span class="sp-tab">Careem Plus, non Careem Plus</span></div>
-        </div>
-        <div class="sp-sec-right"><button class="sp-export-btn">Export</button></div>
-      </div>
-      <div class="sp-chart-wrap" style="height:240px"><canvas id="ci-chart-customers"></canvas></div>
-      <div class="sp-chart-footer">
-        <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
-        <div class="sp-legend-item"><div class="sp-legend-dot"></div>No. of customers: 12 Jan – 11 Feb</div>
-      </div>
-    </div>
-    <div class="ci-protip">
-      <div class="ci-protip-hdr">Pro tip</div>
-      <div class="ci-protip-body">
-        <div class="ci-cplus-badge">Careem+</div>
-        <div class="ci-protip-section-body">Careem Plus customers order more frequently and spend more per order. Encouraging sign-ups can meaningfully boost your revenue.</div>
-        <div class="ci-protip-section">
-          <div class="ci-protip-section-title">New customers</div>
-          <div class="ci-protip-section-body">Attract first-time buyers with a welcome offer. Customers who have a great first experience are significantly more likely to return.</div>
-          <button class="ci-protip-cta">Set up a promotion</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="sp-card-lg sp-anchor" id="sec-ratings" data-path="/analytics/customer/ratings-food-orders" style="scroll-margin-top:16px">
-  <div class="sp-sec-top">
-    <div class="sp-sec-left">
-      <div><div class="sp-sec-title">Ratings on food orders</div><div class="sp-sec-sub">The average rating given by customers to the quality of the food.</div></div>
-      <div class="sp-tabs"><span class="sp-tab active">Avg. rating</span><span class="sp-tab">Low rated orders</span></div>
-    </div>
-    <div class="sp-sec-right">
-      <button class="sp-export-btn">Export</button>
-      <div class="sp-stat"><div class="sp-stat-row">${I.info}<span class="sp-stat-val">4.3</span><span class="ci-star">★</span>${tag('5%','down')}</div><span class="sp-stat-lbl">Avg. food rating</span></div>
-    </div>
-  </div>
-  <div class="sp-chart-wrap" style="height:260px"><canvas id="ci-chart-ratings"></canvas></div>
-  <div class="sp-chart-footer">
-    <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
-    <div class="sp-legend-item"><div class="sp-legend-dot"></div>Rating: 12 Jan – 11 Feb</div>
-  </div>
-</div>
-
 <div class="sp-card-lg sp-anchor" id="sec-cust-funnel" data-path="/analytics/customer/conversion-funnel" style="scroll-margin-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
     <div><div class="sp-sec-title">Customer conversion funnel</div><div class="sp-sec-sub">From impression to order — see where customers drop off in your purchase journey.</div></div>
@@ -2157,6 +2108,55 @@ function buildCustomerInsights(){return`<div class="sp-page">
         <div class="ci-funnel-stat-desc">Customers who completed checkout — successful transactions</div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="sp-card-lg sp-anchor" id="sec-no-customers" data-path="/analytics/customer/no-of-customers" style="scroll-margin-top:16px">
+  <div class="ci-with-sidebar">
+    <div>
+      <div class="sp-sec-top">
+        <div class="sp-sec-left">
+          <div><div class="sp-sec-title">No. of customers</div><div class="sp-sec-sub">Number of unique customers who placed an order</div></div>
+          <div class="sp-tabs"><span class="sp-tab active">Overall</span><span class="sp-tab">New, retained, reactivated</span><span class="sp-tab">Careem Plus, non Careem Plus</span></div>
+        </div>
+        <div class="sp-sec-right"><button class="sp-export-btn">Export</button></div>
+      </div>
+      <div class="sp-chart-wrap" style="height:240px"><canvas id="ci-chart-customers"></canvas></div>
+      <div class="sp-chart-footer">
+        <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
+        <div class="sp-legend-item"><div class="sp-legend-dot"></div>No. of customers: 12 Jan – 11 Feb</div>
+      </div>
+    </div>
+    <div class="ci-protip">
+      <div class="ci-protip-hdr">Pro tip</div>
+      <div class="ci-protip-body">
+        <div class="ci-cplus-badge">Careem+</div>
+        <div class="ci-protip-section-body">Careem Plus customers order more frequently and spend more per order. Encouraging sign-ups can meaningfully boost your revenue.</div>
+        <div class="ci-protip-section">
+          <div class="ci-protip-section-title">New customers</div>
+          <div class="ci-protip-section-body">Attract first-time buyers with a welcome offer. Customers who have a great first experience are significantly more likely to return.</div>
+          <button class="ci-protip-cta">Set up a promotion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sp-card-lg sp-anchor" id="sec-ratings" data-path="/analytics/customer/ratings-food-orders" style="scroll-margin-top:16px">
+  <div class="sp-sec-top">
+    <div class="sp-sec-left">
+      <div><div class="sp-sec-title">Ratings on food orders</div><div class="sp-sec-sub">The average rating given by customers to the quality of the food.</div></div>
+      <div class="sp-tabs"><span class="sp-tab active">Avg. rating</span><span class="sp-tab">Low rated orders</span></div>
+    </div>
+    <div class="sp-sec-right">
+      <button class="sp-export-btn">Export</button>
+      <div class="sp-stat"><div class="sp-stat-row">${I.info}<span class="sp-stat-val">4.3</span><span class="ci-star">★</span>${tag('5%','down')}</div><span class="sp-stat-lbl">Avg. food rating</span></div>
+    </div>
+  </div>
+  <div class="sp-chart-wrap" style="height:260px"><canvas id="ci-chart-ratings"></canvas></div>
+  <div class="sp-chart-footer">
+    <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
+    <div class="sp-legend-item"><div class="sp-legend-dot"></div>Rating: 12 Jan – 11 Feb</div>
   </div>
 </div>
 
