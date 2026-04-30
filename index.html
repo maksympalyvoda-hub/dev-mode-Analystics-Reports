@@ -273,7 +273,7 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .dr-input-text{font-size:14px;font-weight:600;color:#7E8080}
 .dr-input-sep{display:flex;align-items:center;color:#9DC9C3;padding:0 2px}
 .dr-input-ico{display:flex;align-items:center;color:#606161;margin-left:6px;opacity:0.8}
-.sp-compared{font-size:13px;color:#5C5E5E;margin-bottom:16px;display:block;line-height:20px}
+.sp-compared{font-size:14px;color:#5C5E5E;margin-bottom:16px;display:block;line-height:20px}
 .sp-compared:empty{display:none}
 .sp-tabs{display:flex;gap:20px}
 .sp-tab{padding:8px 0;font-size:13px;font-weight:500;color:#606161;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s}
@@ -309,7 +309,7 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .dr-bar-top{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
 .dr-bar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .dr-bar-sep{width:1px;height:20px;background:#E0E3E3;flex-shrink:0;margin:0 4px}
-.dr-bar-info{font-size:13px;color:#5C5E5E;line-height:20px;white-space:nowrap;margin-left:auto;padding-left:12px;border-left:1px solid #E0E3E3;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.dr-bar-info{font-size:14px;color:#5C5E5E;line-height:20px;white-space:nowrap;margin-left:auto;padding-left:12px;border-left:1px solid #E0E3E3;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .dr-bar-info:empty{display:none}
 .dr-bar-top--wrapped .dr-bar-info{margin-left:0;padding-left:0;border-left:none;padding-top:2px;white-space:normal}
 .dr-bar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
@@ -1360,7 +1360,7 @@ function oqFilter(period){
   const strip=document.getElementById('oq-strip-text');if(strip)strip.textContent=d.strip;
   const upd=document.getElementById('oq-updated');if(upd)upd.textContent=d.updated;
   const wrap=document.getElementById('oq-cards');if(!wrap)return;
-  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span>${tag(c.pct,c.dir)}</div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="sp-sval">${c.sval}</span><span class="sp-slbl">${c.slbl}</span></div></div></div>`).join('');
+  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:13px;margin-top:0">${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('');
 }
 
 function sumFilter(period){
@@ -1370,7 +1370,7 @@ function sumFilter(period){
   const upd=document.getElementById('sum-updated');if(upd)upd.textContent=d.updated;
   const wrap=document.getElementById('sum-cards');if(!wrap)return;
   const obCard=`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">Outlet breakdown</span><button class="ob-view-all" onclick="obOpenModal()">View all <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><table class="ob-tbl"><thead><tr><th class="ob-th">Outlet</th><th class="ob-th">Orders</th><th class="ob-th">Sales</th><th class="ob-th">Avg</th></tr></thead><tbody>${d.ob.map(r=>`<tr><td class="ob-td"><span class="ob-nm">${r.name}</span></td><td class="ob-td">${r.orders}</td><td class="ob-td">${r.sales}</td><td class="ob-td">${r.avg}</td></tr>`).join('')}</tbody></table></div>`;
-  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span>${tag(c.pct,c.dir)}</div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="sp-sval">${c.sval}</span><span class="sp-slbl">${c.slbl}</span></div></div></div>`).join('')+obCard;
+  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:13px;margin-top:0">${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('')+obCard;
 }
 
 function buildSalesPerf(){return`<div class="sp-page">
@@ -1405,10 +1405,11 @@ function buildSalesPerf(){return`<div class="sp-page">
 <div class="sp-card-lg sp-anchor" id="sec-orders-sales" data-path="/analytics/sales/orders-sales">
   <div class="sp-sec-top">
     <div class="sp-sec-left">
-      <div class="sp-seg"><div class="sp-seg-item active" onclick="ossSegSwitch(0)">Orders</div><div class="sp-seg-item" onclick="ossSegSwitch(1)">Gross sales</div><div class="sp-seg-item" onclick="ossSegSwitch(2)">Outlets</div></div>
+      <div class="sp-seg"><div class="sp-seg-item active" onclick="ossSegSwitch(0)">Orders</div><div class="sp-seg-item" onclick="ossSegSwitch(1)">Gross sales</div><div class="sp-seg-item" onclick="ossSegSwitch(2)">Avg order value (AOV)</div></div>
       <div class="sp-tabs" id="oss-tabs"><span class="sp-tab active" onclick="ordSalesTab(0)">Overall</span><span class="sp-tab" onclick="ordSalesTab(1)">New, retained, reactivated</span><span class="sp-tab" onclick="ordSalesTab(2)">Careem Plus, non Careem Plus</span></div>
     </div>
     <div class="sp-sec-right">
+      <button class="sp-export-btn">Export</button>
       <div class="sp-stat"><div class="sp-stat-row">${I.info}<span class="sp-stat-unit">AED</span><span class="sp-stat-val">20,000</span>${tag('5%','down')}</div><span class="sp-stat-lbl">Total gross sales</span></div>
     </div>
   </div>
@@ -1421,18 +1422,12 @@ function buildSalesPerf(){return`<div class="sp-page">
     <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
     <div class="sp-legend-item"><div class="sp-legend-dot"></div>Orders: January 12 – February 11</div>
   </div>
-  <div id="oss-outlets-table" style="display:none;width:100%">
-    <div class="oss-tbl-wrap">
-      <table class="oss-tbl" id="oss-tbl">
-        <colgroup><col style="width:220px"><col><col><col></colgroup>
-        <thead><tr>
-          <th class="oss-th" data-sort-key="name" onclick="ossSortBy('name')"><div class="oss-th-inner"><span>Outlet</span><span class="oss-caret"><span class="oss-cu"></span><span class="oss-cd"></span></span></div></th>
-          <th class="oss-th" data-sort-key="orders" onclick="ossSortBy('orders')"><div class="oss-th-inner"><span>Orders</span><span class="oss-caret"><span class="oss-cu"></span><span class="oss-cd"></span></span></div></th>
-          <th class="oss-th" data-sort-key="gross" onclick="ossSortBy('gross')"><div class="oss-th-inner"><span>Gross sales (AED)</span><span class="oss-caret"><span class="oss-cu"></span><span class="oss-cd"></span></span></div></th>
-          <th class="oss-th" data-sort-key="contrib" onclick="ossSortBy('contrib')"><div class="oss-th-inner"><span>Sales contribution</span><span class="oss-caret"><span class="oss-cu"></span><span class="oss-cd"></span></span></div></th>
-        </tr></thead>
-        <tbody id="oss-tbl-body"></tbody>
-      </table>
+  <div id="oss-aov-chart" style="display:none">
+    <div class="sp-chart-wrap" style="height:300px;position:relative">
+      <canvas id="chart-oss-aov" style="position:absolute;inset:0;width:100%!important;height:100%!important"></canvas>
+    </div>
+    <div class="sp-chart-footer">
+      <div class="sp-legend-item"><div class="sp-legend-dot" style="background:#00342C"></div>Avg order value: 12 Jan – 11 Feb</div>
     </div>
   </div>
 </div>
@@ -1440,7 +1435,7 @@ function buildSalesPerf(){return`<div class="sp-page">
 <div class="sp-card-lg sp-anchor" id="sec-gross-sales" data-path="/analytics/sales/gross-sales">
   <div class="sp-sec-top">
     <div class="sp-sec-left">
-      <div><div class="sp-sec-title">Gross sales breakdown</div><div class="sp-sec-sub" id="gs-sub">The distribution of Gross sales by outlets.</div></div>
+      <div><div class="sp-sec-title">Sales breakdown</div><div class="sp-sec-sub" id="gs-sub">The distribution of Gross sales by outlets.</div></div>
       <div class="sp-tabs" id="gs-tabs"><span class="sp-tab active" onclick="gsTab(0)">By outlets</span><span class="sp-tab" onclick="gsTab(1)">By brands</span><span class="sp-tab" onclick="gsTab(2)">By customer zone</span></div>
     </div>
     <div class="sp-sec-right"><button class="sp-export-btn">Export</button><span style="font-size:14px;color:#5C5E5E">12 Jan – 11 Feb</span></div>
@@ -1450,25 +1445,6 @@ function buildSalesPerf(){return`<div class="sp-page">
     <tbody id="gs-tbody"></tbody>
   </table></div>
   <div class="sp-pages"><span class="sp-pg-btn">‹</span><span class="sp-pg-btn active">1</span><span class="sp-pg-btn">2</span><span class="sp-pg-btn">3</span><span class="sp-pg-btn">4</span><span class="sp-pg-btn">5</span><span class="sp-pg-btn">›</span></div>
-</div>
-
-<div class="sp-two" style="align-items:stretch">
-<div class="sp-card-lg sp-anchor" id="sec-avg-order" data-path="/analytics/sales/avg-order-value">
-  <div class="sp-sec-top">
-    <div class="sp-sec-left">
-      <div><div class="sp-sec-title">Avg. Order Value</div><div class="sp-sec-sub">The average basket value based on gross sales for delivered orders</div></div>
-      <div class="sp-tabs"><span class="sp-tab active">Overall</span><span class="sp-tab">New, retained, reactivated</span><span class="sp-tab">Careem Plus, non Careem Plus</span></div>
-    </div>
-    <div class="sp-sec-right">
-      <button class="sp-export-btn">Export</button>
-      <div class="sp-stat"><div class="sp-stat-row">${I.info}<span class="sp-stat-val">100</span>${tag('5%','down')}</div><span class="sp-stat-lbl">Avg. order value</span></div>
-    </div>
-  </div>
-  <div class="sp-chart-wrap" style="height:260px"><canvas id="chart-aov"></canvas></div>
-  <div class="sp-chart-footer">
-    <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
-    <div class="sp-legend-item"><div class="sp-legend-dot"></div>Order value: 12 Jan – 11 Feb</div>
-  </div>
 </div>
 
 <div class="sp-card-lg sp-anchor" id="sec-meal-perf" data-path="/analytics/sales/meal-breakdown">
@@ -1487,7 +1463,6 @@ function buildSalesPerf(){return`<div class="sp-page">
     <span class="mp-leg-item"><span class="mp-dot" style="background:#C8CACA;border:1.5px solid #B0B3B3"></span>Late night (11PM–6AM)</span>
     <span class="mp-leg-item" style="margin-left:8px;padding-left:16px;border-left:1px solid #EAECED"><span class="mp-line-ico"></span>AOV (AED)</span>
   </div>
-</div>
 </div>
 
 <div class="sp-anchor" id="sec-hourly-daily" data-path="/analytics/sales/hourly-daily" style="scroll-margin-top:16px">
@@ -2172,6 +2147,7 @@ function initCharts(){
   const mkLine=(id,lbl)=>{const el=document.getElementById(id);if(!el)return;const ctx=el.getContext('2d');chartInstances[id]=new Chart(ctx,{type:'line',data:{labels:DATES,datasets:[{data:LINE_D,borderColor:'#001942',borderWidth:2,pointBackgroundColor:'#fff',pointBorderColor:'#001942',pointRadius:4,pointHoverRadius:6,fill:true,backgroundColor:(c)=>{const g=c.chart.ctx.createLinearGradient(0,0,0,c.chart.height);g.addColorStop(0,'rgba(0,25,66,0.12)');g.addColorStop(1,'rgba(0,25,66,0.01)');return g},tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:i=>`${lbl}: ${i.raw}`}}},scales:{x:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12}},min:0,max:13}}}})};
   mkLine('chart-orders','Orders');
   mkLine('chart-aov','AED');
+  {const el=document.getElementById('chart-oss-aov');if(el){const ctx=el.getContext('2d');chartInstances['chart-oss-aov']=new Chart(ctx,{type:'line',data:{labels:DATES,datasets:[{data:[42,39,44,41,43,47,45,43,46,44],borderColor:'#00342C',borderWidth:2,pointBackgroundColor:'#fff',pointBorderColor:'#00342C',pointRadius:4,pointHoverRadius:6,fill:true,backgroundColor:(c)=>{const g=c.chart.ctx.createLinearGradient(0,0,0,c.chart.height);g.addColorStop(0,'rgba(0,52,44,0.12)');g.addColorStop(1,'rgba(0,52,44,0.01)');return g},tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:i=>`AED ${i.raw}`}}},scales:{x:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12},callback:v=>`AED ${v}`},min:35,max:52}}}})}}
   // NRR breakdown — 3 series: New / Retained / Reactivated
   const nrrEl=document.getElementById('chart-orders-nrr');
   if(nrrEl){const nrrCtx=nrrEl.getContext('2d');chartInstances['chart-orders-nrr']=new Chart(nrrCtx,{type:'line',data:{labels:DATES,datasets:[
@@ -4556,11 +4532,12 @@ function ossSortBy(key){if(ossSortKey===key){ossSortDir*=-1}else{ossSortKey=key;
 function ossSegSwitch(idx){
   const sec=document.getElementById('sec-orders-sales');if(!sec)return;
   sec.querySelectorAll('.sp-seg-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
-  const isOut=idx===2;
-  const tabs=document.getElementById('oss-tabs');if(tabs)tabs.style.display=isOut?'none':'';
-  const cw=sec.querySelector('.sp-chart-wrap');if(cw)cw.style.display=isOut?'none':'';
-  const ft=document.getElementById('oss-footer');if(ft)ft.style.display=isOut?'none':'';
-  const tbl=document.getElementById('oss-outlets-table');if(tbl){tbl.style.display=isOut?'block':'none';if(isOut)ossRenderTbl()}
+  const isAov=idx===2;
+  const tabs=document.getElementById('oss-tabs');if(tabs)tabs.style.display=isAov?'none':'';
+  const cw=sec.querySelector('.sp-chart-wrap');if(cw)cw.style.display=isAov?'none':'';
+  const ft=document.getElementById('oss-footer');if(ft)ft.style.display=isAov?'none':'';
+  const aov=document.getElementById('oss-aov-chart');
+  if(aov){aov.style.display=isAov?'block':'none';if(isAov&&chartInstances['chart-oss-aov'])setTimeout(()=>chartInstances['chart-oss-aov'].resize(),0);}
 }
 
 // Compare dropdown — chart comparison logic
