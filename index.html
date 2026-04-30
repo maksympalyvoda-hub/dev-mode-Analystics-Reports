@@ -1772,7 +1772,10 @@ function buildOpsQuality(){
   </div>
 </div>
 <div class="sp-card-lg">
-  <div class="sp-sec-title" style="margin-bottom:14px">% marked ready</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div class="sp-sec-title">% marked ready</div>
+    <button class="sp-export-btn">Export</button>
+  </div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
     <div class="sp-donut-chart" style="width:120px;height:120px;position:relative;flex-shrink:0">
       <canvas id="oq-chart-ready-donut"></canvas>
@@ -1877,29 +1880,6 @@ function buildOpsQuality(){
   <div class="sp-pages"><span class="sp-pg-btn">‹</span><span class="sp-pg-btn active">1</span><span class="sp-pg-btn">2</span><span class="sp-pg-btn">›</span></div>
 </div>
 
-<div class="sp-card-lg sp-anchor" id="sec-order-prep-eff" data-path="/analytics/ops-quality/order-prep-efficiency" style="scroll-margin-top:16px">
-  <div class="sp-sec-top" style="margin-bottom:16px">
-    <div class="sp-sec-left">
-      <div class="sp-sec-title">Order preparation efficiency</div>
-    </div>
-    <div class="sp-sec-right">
-      <button class="sp-export-btn">Export</button>
-    </div>
-  </div>
-  <!-- Row 1: Delays % + Wait time -->
-  <div style="display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-bottom:16px">
-    <div class="oq-sub">
-      <div class="oq-sub-title">Delays % <span class="sp-info-ico" title="Share of orders where preparation exceeded the promised time">${I.info}</span></div>
-      <div class="oq-sub-kv"><div class="oq-kv-val">2%${tag('5%','up')}</div><div class="oq-kv-lbl">Avg. delay rate</div></div>
-      <div class="sp-chart-wrap" style="height:160px"><canvas id="oq-chart-prep-eff"></canvas></div>
-    </div>
-    <div class="oq-sub">
-      <div class="oq-sub-title">Wait time <span class="sp-info-ico" title="How long the captain waited after arriving before pickup">${I.info}</span></div>
-      <div class="oq-sub-kv"><div class="oq-kv-val">2.1 <span style="font-size:14px;font-weight:600">min</span>${tag('8%','down')}</div><div class="oq-kv-lbl">Avg. wait time</div></div>
-      <div class="sp-chart-wrap" style="height:160px"><canvas id="oq-chart-waittime"></canvas></div>
-    </div>
-  </div>
-</div>
 
 <div class="sp-card-lg sp-anchor" id="sec-order-prep-bk" data-path="/analytics/ops-quality/order-prep-breakdown" style="scroll-margin-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
