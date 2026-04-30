@@ -1379,7 +1379,7 @@ function oqFilter(period){
   const strip=document.getElementById('oq-strip-text');if(strip)strip.textContent=d.strip;
   const upd=document.getElementById('oq-updated');if(upd)upd.textContent=d.updated;
   const wrap=document.getElementById('oq-cards');if(!wrap)return;
-  wrap.innerHTML=d.cards.map(c=>{const good=c.flip?(c.dir==='down'):(c.dir==='up');return`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${good?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`}).join('');
+  wrap.innerHTML=d.cards.map(c=>{const good=c.flip?(c.dir==='down'):(c.dir==='up');return`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${good?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`}).join('');
 }
 
 function sumFilter(period){
@@ -1389,7 +1389,7 @@ function sumFilter(period){
   const upd=document.getElementById('sum-updated');if(upd)upd.textContent=d.updated;
   const wrap=document.getElementById('sum-cards');if(!wrap)return;
   const obCard=`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">Outlet breakdown</span><button class="ob-view-all" onclick="obOpenModal()">View all <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><table class="ob-tbl"><thead><tr><th class="ob-th">Outlet</th><th class="ob-th">Orders</th><th class="ob-th">Sales</th><th class="ob-th">Avg</th></tr></thead><tbody>${d.ob.map(r=>`<tr><td class="ob-td"><span class="ob-nm">${r.name}</span></td><td class="ob-td">${r.orders}</td><td class="ob-td">${r.sales}</td><td class="ob-td">${r.avg}</td></tr>`).join('')}</tbody></table></div>`;
-  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('')+obCard;
+  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('')+obCard;
 }
 
 function buildSalesPerf(){return`<div class="sp-page">
@@ -2822,7 +2822,7 @@ function ocSparkTrend(trend,statusKey){
 function ocDelta(cur,prev,fmt){
   const pct=Math.round((cur-prev)/prev*100);
   const up=pct>=0;
-  const sign=up?'+':'';
+  const sign='';
   const cls=up?'oc-up':'oc-down';
   let valStr=typeof fmt==='function'?fmt(cur):cur;
   let prevStr=typeof fmt==='function'?fmt(prev):prev;
@@ -2902,14 +2902,14 @@ function ocBuildRows(data){
     const st=ocGetStatus(row,ocSt.tab);
     const isBiz=ocSt.tab==='business';
     const revChg=Math.round((row.cur.rev-row.prev.rev)/row.prev.rev*100);
-    const revSign=revChg>=0?'+':'';
+    const revSign='';
     const revCls=revChg>=0?'oc-up':'oc-down';
     if(isBiz){
       const ordChg=Math.round((row.cur.orders-row.prev.orders)/row.prev.orders*100);
-      const ordSign=ordChg>=0?'+':'';
+      const ordSign='';
       const ordCls=ordChg>=0?'oc-up':'oc-down';
       const aovChg=Math.round((row.cur.aov-row.prev.aov)/row.prev.aov*100);
-      const aovSign=aovChg>=0?'+':'';
+      const aovSign='';
       const aovCls=aovChg>=0?'oc-up':'oc-down';
       const subLbl=ocSt.view==='outlets'?`<div class="oc-sub">${row.brand} · ${row.area}</div>`:`<div class="oc-sub">${row.outlets} outlet${row.outlets>1?'s':''}</div>`;
       return`<tr>
@@ -2924,11 +2924,11 @@ function ocBuildRows(data){
       </tr>`;
     }else{
       const cChg=Math.round((row.cur.cancel-row.prev.cancel)/row.prev.cancel*100);
-      const cSign=cChg>=0?'+':'';const cCls=cChg>=0?'oc-down':'oc-up';
+      const cSign='';const cCls=cChg>=0?'oc-down':'oc-up';
       const wChg=Math.round((row.cur.wtm-row.prev.wtm)/row.prev.wtm*100);
-      const wSign=wChg>=0?'+':'';const wCls=wChg>=0?'oc-down':'oc-up';
+      const wSign='';const wCls=wChg>=0?'oc-down':'oc-up';
       const dChg=Math.round((row.cur.delays-row.prev.delays)/row.prev.delays*100);
-      const dSign=dChg>=0?'+':'';const dCls=dChg>=0?'oc-down':'oc-up';
+      const dSign='';const dCls=dChg>=0?'oc-down':'oc-up';
       const subLbl=ocSt.view==='outlets'?`<div class="oc-sub">${row.brand} · ${row.area}</div>`:`<div class="oc-sub">${row.outlets} outlet${row.outlets>1?'s':''}</div>`;
       return`<tr>
         <td><div class="oc-rank${rank<=3?' top':''}">${rank}</div></td>
@@ -3324,7 +3324,7 @@ function iaAvatar(item){
 function iaChgBadge(cur,prev,isRate){
   if(prev==null||prev===0)return'';
   const diff=isRate?(cur-prev):((cur-prev)/prev*100);
-  const sign=diff>=0?'+':'';
+  const sign='';
   const label=isRate?`${sign}${diff.toFixed(1)}pp`:`${sign}${diff.toFixed(1)}%`;
   const cls=diff>0?'ia-chg-up':diff<0?'ia-chg-dn':'ia-chg-neu';
   const arrow=diff>0?'↑':diff<0?'↓':'→';
@@ -4276,7 +4276,7 @@ function diChg(cur,prev){return prev?((cur-prev)/Math.abs(prev)*100):0}
 function diAed(n){return`AED ${Number(n).toLocaleString('en')}`}
 function diAedK(n){return n>=10000?`AED ${(n/1000).toFixed(0)}k`:`AED ${Number(n).toLocaleString('en')}`}
 function diNum(n){return n>=1000?`${(n/1000).toFixed(1)}k`:String(n)}
-function diSign(n){return n>0?'+':''}
+function diSign(n){return ''}
 function diPrdLabel(k){const m={yesterday:'vs prior day',today:'vs same time yesterday',thisweek:'vs same period last week',lastweek:'vs week before',thismonth:'vs same period last month',lastmonth:'vs month before'};return m[k]||'vs prior period'}
 function diBadge(chg,invert){
   const good=invert?(chg<=0):(chg>=0);
@@ -4592,7 +4592,7 @@ function gsRender(){
   const thEl=document.getElementById('gs-col1');if(thEl)thEl.textContent=col1;
   el.innerHTML=rows.map(r=>{
     const u=r.trend.dir==='up';
-    const trendHtml=`<span class="oq-vs ${u?'pos':'neg'}" style="font-size:12px;display:inline-flex;align-items:center;gap:2px;margin-top:0">${I[u?'arrowUp':'arrowDown']}${u?'+':'−'}${r.trend.pct}</span>`;
+    const trendHtml=`<span class="oq-vs ${u?'pos':'neg'}" style="font-size:12px;display:inline-flex;align-items:center;gap:2px;margin-top:0">${I[u?'arrowUp':'arrowDown']}${r.trend.pct}</span>`;
     return`<tr><td>${r.name}</td><td>${gsFmt(r.orders)}</td><td><div class="gs-tbl-gross">${gsFmt(r.gross)}${trendHtml}</div></td><td>${r.contrib}%</td></tr>`;
   }).join('');
 }
