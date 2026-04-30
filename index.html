@@ -1109,11 +1109,11 @@ const NAV=[
       {id:'ops-q',lbl:'Operations Quality',children:[
         {id:'partner-cancel',lbl:'Avoidable cancellations',path:'/analytics/ops-quality/partner-cancellations'},
         {id:'defects',lbl:'Captain wait time',path:'/analytics/ops-quality/captain-wait-time'},
+        {id:'offline',lbl:'Offline time',path:'/analytics/ops-quality/offline-time'},
         {id:'outlet-perf',lbl:'Outlet comparison',path:'/analytics/ops-quality/outlet-performance'},
         {id:'order-prep-eff',lbl:'Order preparation efficiency',path:'/analytics/ops-quality/order-prep-efficiency'},
         {id:'order-prep-bk',lbl:'Order preparation breakdown',path:'/analytics/ops-quality/order-prep-breakdown'},
         {id:'avg-accept',lbl:'Avg. acceptance time',path:'/analytics/ops-quality/avg-acceptance-time'},
-        {id:'offline',lbl:'Offline time',path:'/analytics/ops-quality/offline-time'},
       ]},
       {id:'cust',lbl:'Customer insights',children:[
         {id:'cust-breakdown',lbl:'Customer breakdown',path:'/analytics/customer/customer-breakdown'},
@@ -1149,7 +1149,7 @@ const NAV=[
 const SALES_PATHS=new Set(['/analytics/sales/orders-sales','/analytics/sales/gross-sales','/analytics/sales/avg-order-value','/analytics/sales/meal-breakdown','/analytics/sales/avg-order-mealtime','/analytics/sales/hourly-daily']);
 const PATH_TO_SEC={'/analytics/sales/orders-sales':'sec-orders-sales','/analytics/sales/gross-sales':'sec-gross-sales','/analytics/sales/avg-order-value':'sec-avg-order','/analytics/sales/meal-breakdown':'sec-meal-breakdown','/analytics/sales/avg-order-mealtime':'sec-meal-aov','/analytics/sales/hourly-daily':'sec-hourly-daily'};
 const OPS_PATHS=new Set(['/analytics/ops-quality/partner-cancellations','/analytics/ops-quality/orders-with-defect','/analytics/ops-quality/captain-wait-time','/analytics/ops-quality/outlet-performance','/analytics/ops-quality/order-prep-efficiency','/analytics/ops-quality/order-prep-breakdown','/analytics/ops-quality/avg-acceptance-time','/analytics/ops-quality/offline-time']);
-const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/orders-with-defect':'sec-orders-defect','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-efficiency':'sec-order-prep-eff','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept','/analytics/ops-quality/offline-time':'sec-offline'};
+const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/orders-with-defect':'sec-orders-defect','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/offline-time':'sec-offline','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-efficiency':'sec-order-prep-eff','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept'};
 const CUST_PATHS=new Set(['/analytics/customer/customer-breakdown','/analytics/customer/no-of-customers','/analytics/customer/ratings-food-orders','/analytics/customer/conversion-funnel','/analytics/customer/order-frequency','/analytics/customer/reorder-rate','/analytics/customer/impressions','/analytics/customer/discount-impact','/analytics/customer/retention']);
 const PATH_TO_CUST_SEC={'/analytics/customer/customer-breakdown':'sec-cust-breakdown','/analytics/customer/no-of-customers':'sec-no-customers','/analytics/customer/ratings-food-orders':'sec-ratings','/analytics/customer/conversion-funnel':'sec-cust-funnel','/analytics/customer/order-frequency':'sec-order-freq','/analytics/customer/reorder-rate':'sec-reorder-rate','/analytics/customer/impressions':'sec-impressions','/analytics/customer/discount-impact':'sec-discount-impact','/analytics/customer/retention':'sec-retention'};
 
@@ -1796,6 +1796,26 @@ function buildOpsQuality(){
 </div>
 </div>
 
+<div class="sp-card-lg sp-anchor" id="sec-offline" data-path="/analytics/ops-quality/offline-time" style="scroll-margin-top:16px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+    <div>
+      <div class="sp-sec-title">Offline time</div>
+      <button class="oh-link-btn" onclick="ohOpenModal()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5V7l1.8 1.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Check operating hours</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px"><span class="oq-date-lbl">12 Jan – 11 Feb</span><button class="sp-export-btn">Export</button></div>
+  </div>
+  <table class="oq-heatmap">
+    <thead><tr><th>Meal time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead>
+    <tbody>${hmRows.map(r=>`<tr><td>${r.lbl}</td>${r.vals.map(v=>hmCell(v)).join('')}</tr>`).join('')}</tbody>
+  </table>
+  <div class="oq-hm-legend">
+    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#f2f4f8"></div>0–60 min</div>
+    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#d0d7e6"></div>61–120 min</div>
+    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#b0bcd4"></div>121–180 min</div>
+    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#364b6e"></div>181+ min</div>
+  </div>
+</div>
+
 <div class="sp-card-lg sp-anchor" id="sec-outlet-perf" data-path="/analytics/ops-quality/outlet-performance" style="scroll-margin-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
     <div class="sp-sec-title">Outlet comparison</div>
@@ -1920,25 +1940,6 @@ function buildOpsQuality(){
   </div>
 </div>
 
-<div class="sp-card-lg sp-anchor" id="sec-offline" data-path="/analytics/ops-quality/offline-time" style="scroll-margin-top:16px">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
-    <div>
-      <div class="sp-sec-title">Offline time</div>
-      <button class="oh-link-btn" onclick="ohOpenModal()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5V7l1.8 1.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Check operating hours</button>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px"><span class="oq-date-lbl">12 Jan – 11 Feb</span><button class="sp-export-btn">Export</button></div>
-  </div>
-  <table class="oq-heatmap">
-    <thead><tr><th>Meal time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead>
-    <tbody>${hmRows.map(r=>`<tr><td>${r.lbl}</td>${r.vals.map(v=>hmCell(v)).join('')}</tr>`).join('')}</tbody>
-  </table>
-  <div class="oq-hm-legend">
-    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#f2f4f8"></div>0–60 min</div>
-    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#d0d7e6"></div>61–120 min</div>
-    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#b0bcd4"></div>121–180 min</div>
-    <div class="oq-hm-li"><div class="oq-hm-sw" style="background:#364b6e"></div>181+ min</div>
-  </div>
-</div>
 
 </div>`}
 
