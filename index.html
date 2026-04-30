@@ -1357,7 +1357,7 @@ const OQ_DATA={
     updated:'Updated as of: 16:00',
     cards:[
       {title:'Avoidable cancellations',val:'3',lbl:'Today',sval:'5',slbl:'Yesterday',pct:'40%',dir:'down'},
-      {title:'Captain wait time',val:'3.2 <span style="font-size:14px">min</span>',lbl:'Today',sval:'4.1 <span style="font-size:14px">min</span>',slbl:'Yesterday',pct:'22%',dir:'down'},
+      {title:'Orders with defect',val:'4.2%',lbl:'Today',sval:'4.8%',slbl:'Yesterday',pct:'12%',dir:'down',flip:true},
       {title:'Preparation time',val:'6 <span style="font-size:14px">min</span>',lbl:'Today',sval:'8 <span style="font-size:14px">min</span>',slbl:'Yesterday',pct:'25%',dir:'down'},
       {title:'Offline time',val:'12 <span style="font-size:14px">min</span>',lbl:'Today',sval:'20 <span style="font-size:14px">min</span>',slbl:'Yesterday',pct:'40%',dir:'down'},
     ]
@@ -1367,7 +1367,7 @@ const OQ_DATA={
     updated:'Updated as of: 16:00',
     cards:[
       {title:'Avoidable cancellations',val:'12',lbl:'Last 7 days',sval:'6%',slbl:'% of orders',pct:'6%',dir:'up'},
-      {title:'Captain wait time',val:'3.2 <span style="font-size:14px">min</span>',lbl:'Avg. this week',sval:'8.4%',slbl:'% delayed',pct:'8%',dir:'down'},
+      {title:'Orders with defect',val:'3.8%',lbl:'Avg. this week',sval:'24',slbl:'Total defects',pct:'8%',dir:'down',flip:true},
       {title:'Preparation time',val:'8 <span style="font-size:14px">min</span>',lbl:'Last 7 days',sval:'7%',slbl:'Delayed orders',pct:'7%',dir:'up'},
       {title:'Offline time',val:'3 <span style="font-size:14px">h</span>',lbl:'Last 7 days',sval:'6%',slbl:'% of time',pct:'6%',dir:'up'},
     ]
@@ -1379,7 +1379,7 @@ function oqFilter(period){
   const strip=document.getElementById('oq-strip-text');if(strip)strip.textContent=d.strip;
   const upd=document.getElementById('oq-updated');if(upd)upd.textContent=d.updated;
   const wrap=document.getElementById('oq-cards');if(!wrap)return;
-  wrap.innerHTML=d.cards.map(c=>`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${c.dir==='up'?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`).join('');
+  wrap.innerHTML=d.cards.map(c=>{const good=c.flip?(c.dir==='down'):(c.dir==='up');return`<div class="sp-card"><div class="sp-card-hdr"><span class="sp-card-title">${c.title}</span></div><div class="sp-card-body"><div class="sp-card-main"><span class="sp-val">${c.val}</span><span class="sp-lbl">${c.lbl}</span></div><div class="sp-card-sec"><span class="oq-vs ${good?'pos':'neg'}" style="font-size:14px;margin-top:0;display:inline-flex;align-items:center;gap:3px">${I[c.dir==='up'?'arrowUp':'arrowDown']}${c.dir==='up'?'+':'−'}${c.pct}</span><span class="sp-slbl">vs prev period</span></div></div></div>`}).join('');
 }
 
 function sumFilter(period){
