@@ -1752,6 +1752,47 @@ function buildOpsQuality(){
 </div>
 </div>
 
+<div class="oq-def-row">
+<div class="sp-card-lg sp-anchor" id="sec-meal-prep-time" style="scroll-margin-top:16px">
+  <div class="sp-sec-top">
+    <div class="sp-sec-left">
+      <div><div class="sp-sec-title">Meal preparation time</div><div class="sp-sec-sub">Average time from order receipt to kitchen ready</div></div>
+    </div>
+    <div class="sp-sec-right">
+      <button class="sp-export-btn">Export</button>
+      <div class="oq-stat-row">
+        <div class="oq-kv"><div class="oq-kv-val">14.2 <span style="font-size:14px;font-weight:600">min</span>${tag('10.7%','up')}</div><div class="oq-kv-lbl">Avg. prep time</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="sp-chart-wrap" style="height:200px"><canvas id="oq-chart-mealprep"></canvas></div>
+  <div class="sp-chart-footer" style="margin-top:8px">
+    <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
+    <div class="sp-legend-item"><div class="sp-legend-dot"></div>Prep time: 12 Jan – 11 Feb</div>
+  </div>
+</div>
+<div class="sp-card-lg">
+  <div class="sp-sec-title" style="margin-bottom:14px">% marked ready</div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div class="sp-donut-chart" style="width:120px;height:120px;position:relative;flex-shrink:0">
+      <canvas id="oq-chart-ready-donut"></canvas>
+      <div class="oq-donut-center">
+        <div style="font-size:9px;color:#5C5E5E;line-height:1.3;text-align:center">Marked<br>as ready</div>
+        <div style="font-size:16px;font-weight:700;color:#202121;margin-top:2px">92.8%</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+      <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#008470;flex-shrink:0"></div>
+        <div style="font-size:12px;color:#5C5E5E">Orders marked ready<br><strong style="font-size:13px;color:#202121">335 orders</strong></div>
+      </div>
+      <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#E8ECEC;border:1px solid #D4D6D6;flex-shrink:0"></div>
+        <div style="font-size:12px;color:#5C5E5E">Total prepared<br><strong style="font-size:13px;color:#202121">361 orders</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <div class="sp-card-lg sp-anchor" id="sec-outlet-perf" data-path="/analytics/ops-quality/outlet-performance" style="scroll-margin-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
     <div class="sp-sec-title">Outlet comparison</div>
@@ -1856,38 +1897,6 @@ function buildOpsQuality(){
       <div class="oq-sub-title">Wait time <span class="sp-info-ico" title="How long the captain waited after arriving before pickup">${I.info}</span></div>
       <div class="oq-sub-kv"><div class="oq-kv-val">2.1 <span style="font-size:14px;font-weight:600">min</span>${tag('8%','down')}</div><div class="oq-kv-lbl">Avg. wait time</div></div>
       <div class="sp-chart-wrap" style="height:160px"><canvas id="oq-chart-waittime"></canvas></div>
-    </div>
-  </div>
-  <!-- Row 2: Meal prep time (60%) + % marked ready donut (40%) -->
-  <div style="display:grid;grid-template-columns:3fr 2fr;gap:16px">
-    <div class="oq-sub">
-      <div class="oq-sub-title">Meal preparation time <span class="sp-info-ico" title="Average time from order receipt to kitchen ready">${I.info}</span></div>
-      <div class="oq-sub-kv"><div class="oq-kv-val">14.2 <span style="font-size:14px;font-weight:600">min</span>${tag('10.7%','down')}</div><div class="oq-kv-lbl">Avg. prep time</div></div>
-      <div class="sp-chart-wrap" style="height:160px"><canvas id="oq-chart-mealprep"></canvas></div>
-      <div class="sp-chart-footer" style="margin-top:8px">
-        <div class="cmp-wrap"><div class="cmp-trigger" onclick="cmpToggle(this)"><span class="cmp-label">Compare to: None</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cmp-dropdown"><div class="cmp-menu"><div class="cmp-item selected" onclick="cmpSelect(this)" data-label=""><span class="cmp-rb"></span>None</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous month"><span class="cmp-rb"></span>Previous month</div><div class="cmp-item" onclick="cmpSelect(this)" data-label="Previous year"><span class="cmp-rb"></span>Previous year</div></div><div class="cmp-footer"><button class="cmp-reset" onclick="cmpReset(this)">Reset</button><button class="cmp-apply" onclick="cmpApply(this)">Apply</button></div></div></div>
-        <div class="sp-legend-item"><div class="sp-legend-dot"></div>Prep time: 12 Jan – 11 Feb</div>
-      </div>
-    </div>
-    <div class="oq-sub">
-      <div class="oq-sub-title">% marked ready <span class="sp-info-ico" title="Orders proactively marked ready before captain arrival">${I.info}</span></div>
-      <div style="display:flex;align-items:center;gap:16px;margin-top:8px">
-        <div class="sp-donut-chart" style="width:140px;height:140px;position:relative;flex-shrink:0">
-          <canvas id="oq-chart-ready-donut"></canvas>
-          <div class="oq-donut-center">
-            <div style="font-size:10px;color:#5C5E5E;line-height:1.3">Marked<br>as ready</div>
-            <div style="font-size:17px;font-weight:700;color:#202121;margin-top:2px">92.8%</div>
-          </div>
-        </div>
-        <div class="sp-donut-legend">
-          <div class="sp-dl-item"><div class="sp-dl-dot" style="background:#008470"></div>
-            <div>Orders marked ready<br><strong style="font-size:13px;color:#202121">335 orders</strong></div>
-          </div>
-          <div class="sp-dl-item" style="margin-top:10px"><div class="sp-dl-dot" style="background:#E8ECEC;border:1px solid #D4D6D6"></div>
-            <div>Total prepared<br><strong style="font-size:13px;color:#202121">361 orders</strong></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
