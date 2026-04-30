@@ -1312,6 +1312,96 @@ const GV_DATA={
   'oq-chart-mealprep':{daily:[14.5,14.0,13.8,15.2,14.8,13.6,14.1,14.4,13.9,14.2],weekly:[14.8,14.3,13.9,14.5],monthly:[15.1,14.8,14.3,14.6,13.9,14.2]}
 };
 const gvState={oss:'Daily',oq:'Daily'};
+// ── Global date-range engine ──────────────────────────────────────────────────
+const _TODAY=new Date(2026,3,30);
+const _MTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function _ds(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function _fmtD(ds){const d=new Date(ds);return`${d.getDate()} ${_MTHS[d.getMonth()]}`}
+function _fmtRange(s,e){return`${_fmtD(s)} – ${_fmtD(e)}`}
+const _d7s=new Date(_TODAY);_d7s.setDate(_d7s.getDate()-6);
+let G_START=_ds(_d7s),G_END=_ds(_TODAY);
+const CHART_META={
+  'chart-orders':       {base:88,  vr:10, mn:55,  mx:130},
+  'chart-orders-nrr':   {base:40,  vr:7,  mn:25,  mx:65},
+  'chart-orders-cplus': {base:27,  vr:5,  mn:15,  mx:45},
+  'chart-aov':          {base:43,  vr:2.5,mn:36,  mx:52, dc:1},
+  'oq-chart-cancel':    {ml:[{b:2,v:0.8,mn:0,mx:8},{b:1.2,v:0.4,mn:0,mx:5,dc:1}]},
+  'oq-chart-defects':   {ml:[{b:3.2,v:0.7,mn:1,mx:6,dc:1},{b:8,v:2,mn:3,mx:18}]},
+  'oq-chart-waittime':  {base:1.2, vr:0.3,mn:0,  mx:4,  dc:1},
+  'oq-chart-accept':    {base:1.1, vr:0.2,mn:0,  mx:3,  dc:1},
+  'oq-chart-mealprep':  {base:14.2,vr:0.8,mn:11, mx:18, dc:1},
+  'oq-chart-owd':       {ml:[{b:25,v:5,mn:10,mx:50},{b:4,v:1,mn:1,mx:8,dc:1}]},
+  'ci-chart-reorder':   {base:34,  vr:4,  mn:20,  mx:50},
+  'ci-chart-ratings':   {base:4.0, vr:0.4,mn:3,   mx:5,  dc:1},
+  'ci-chart-imp-line':  {base:4800,vr:600,mn:2000,mx:7000},
+  'ci-chart-conv-trends':{base:27, vr:3,  mn:0,   mx:100},
+};
+function _genD(n,base,vr,mn,mx,dc){
+  return Array.from({length:n},()=>{
+    const raw=base+(Math.random()-0.5)*2*vr;
+    const c=Math.max(mn??0,Math.min(mx??9999,raw));
+    return dc?Math.round(c*10)/10:Math.round(c);
+  });
+}
+function _buildLabels(startDs,endDs,view){
+  const s=new Date(startDs),e=new Date(endDs);
+  const days=Math.round((e-s)/86400000)+1;
+  const pts=[];
+  if(view==='weekly'){
+    const nw=Math.ceil(days/7);
+    for(let w=0;w<Math.min(nw,12);w++){const d=new Date(s);d.setDate(d.getDate()+w*7);pts.push(`${d.getDate()} ${_MTHS[d.getMonth()]}`)}
+  }else if(view==='monthly'){
+    let y=s.getFullYear(),m=s.getMonth();
+    while(new Date(y,m,1)<=e&&pts.length<12){pts.push(_MTHS[m]);if(++m>11){m=0;y++}}
+  }else{
+    const step=Math.max(1,Math.ceil(days/10));
+    for(let d=new Date(s);d<=e;){pts.push(`${d.getDate()} ${_MTHS[d.getMonth()]}`);d.setDate(d.getDate()+step)}
+  }
+  return pts.length?pts:[`${s.getDate()} ${_MTHS[s.getMonth()]}`];
+}
+function _updateLegendDates(rangeStr){
+  document.querySelectorAll('.dr-bar-info,.sp-compared').forEach(el=>{
+    const svg=el.querySelector('svg');const svgHtml=svg?svg.outerHTML:'';
+    el.innerHTML=`${svgHtml}Data shown for: ${rangeStr}`;
+  });
+  document.querySelectorAll('.oq-date-lbl').forEach(el=>{el.textContent=rangeStr});
+  document.querySelectorAll('.sp-legend-item').forEach(el=>{
+    el.childNodes.forEach(n=>{
+      if(n.nodeType===3&&n.textContent.includes(': ')){
+        n.textContent=n.textContent.replace(/: .+$/,`: ${rangeStr}`);
+      }
+    });
+  });
+}
+function applyGlobalRange(startDs,endDs){
+  G_START=startDs;G_END=endDs;
+  const rangeStr=_fmtRange(startDs,endDs);
+  _updateLegendDates(rangeStr);
+  const gvEl=document.querySelector('.gv-label');
+  const view=(gvEl?gvEl.textContent.trim():'Daily').toLowerCase();
+  const labels=_buildLabels(startDs,endDs,view);
+  const n=labels.length;
+  Object.entries(chartInstances).forEach(([id,ch])=>{
+    if(!ch?.data?.labels?.length)return;
+    const meta=CHART_META[id];if(!meta)return;
+    ch.data.labels=labels;
+    if(meta.ml){ch.data.datasets.forEach((ds,i)=>{const m=meta.ml[i]||meta.ml[0];ds.data=_genD(n,m.b,m.v,m.mn,m.mx,m.dc)})}
+    else{ch.data.datasets[0].data=_genD(n,meta.base,meta.vr,meta.mn,meta.mx,meta.dc)}
+    ch.update('none');
+  });
+}
+// Preset range buttons
+document.addEventListener('click',e=>{
+  const ri=e.target.closest('.sp-range-item');
+  if(!ri)return;
+  const rng=ri.closest('.sp-range');if(!rng)return;
+  rng.querySelectorAll('.sp-range-item').forEach(i=>i.classList.remove('active'));
+  ri.classList.add('active');
+  const lbl=ri.textContent.trim();
+  const s=new Date(_TODAY);
+  if(lbl==='Last 7 days'){s.setDate(s.getDate()-6);applyGlobalRange(_ds(s),_ds(_TODAY))}
+  else if(lbl==='Last 30 days'){s.setDate(s.getDate()-29);applyGlobalRange(_ds(s),_ds(_TODAY))}
+});
 function gvToggle(trigger){
   const wrap=trigger.closest('.gv-wrap');
   const isOpen=wrap.classList.contains('open');
@@ -1344,18 +1434,18 @@ function gvUpdateCharts(wrap,view){
   const section=bar?bar.dataset.section:null;
   if(!section)return;
   const key=view.toLowerCase();
-  const labels=GV_LABELS[key];
+  const labels=_buildLabels(G_START,G_END,key);
+  const n=labels.length;
   const ids=section==='oss'
     ?['chart-orders','chart-orders-nrr','chart-orders-cplus','chart-aov']
-    :['oq-chart-cancel','oq-chart-defects','oq-chart-prep-eff','oq-chart-accept','oq-chart-waittime','oq-chart-mealprep'];
+    :['oq-chart-cancel','oq-chart-defects','oq-chart-accept','oq-chart-waittime','oq-chart-mealprep'];
   ids.forEach(id=>{
     const ch=chartInstances[id];
-    const d=GV_DATA[id];
-    if(!ch||!d||!d[key])return;
+    const meta=CHART_META[id];
+    if(!ch||!meta)return;
     ch.data.labels=labels;
-    const src=d[key];
-    const isMulti=Array.isArray(src[0]);
-    ch.data.datasets.forEach((ds,i)=>{ds.data=isMulti?src[i]||src[0]:src});
+    if(meta.ml){ch.data.datasets.forEach((ds,i)=>{const m=meta.ml[i]||meta.ml[0];ds.data=_genD(n,m.b,m.v,m.mn,m.mx,m.dc)})}
+    else{ch.data.datasets[0].data=_genD(n,meta.base,meta.vr,meta.mn,meta.mx,meta.dc)}
     ch.update();
   });
   if(section==='oss')gvState.oss=view;else gvState.oq=view;
@@ -2399,6 +2489,7 @@ function initCharts(){
       }
     }
   })}
+  applyGlobalRange(G_START,G_END);
 }
 
 function initOpsCharts(){
@@ -2518,6 +2609,7 @@ function initOpsCharts(){
       }
     }
   })}
+  applyGlobalRange(G_START,G_END);
 }
 
 function initCustCharts(){
@@ -2565,6 +2657,7 @@ function initCustCharts(){
   if(impLblEl)chartInstances['ci-chart-imp-line']=new Chart(impLblEl.getContext('2d'),{type:'line',data:{labels:DATES,datasets:[{label:'Impressions',data:[4200,3900,4800,5100,4600,5500,5300,4900,5200,5700],borderColor:'#336D65',borderWidth:2,backgroundColor:'rgba(51,109,101,0.08)',pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:'#336D65',fill:true,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:11}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:11},callback:v=>v>=1000?`${v/1000}k`:v},min:3000,max:6500}}}});
   const discEl=document.getElementById('ci-chart-disc');
   if(discEl)chartInstances['ci-chart-disc']=new Chart(discEl.getContext('2d'),{type:'bar',data:{labels:['0%','1–5%','6–10%','11–15%','16–20%','21–25%','25%+'],datasets:[{label:'Conversion rate',data:[8,11,14,18,22,21,17],backgroundColor:(ctx)=>{const v=ctx.parsed.y;return v>=20?'#336D65':v>=16?'#008470':v>=12?'#9DC9C3':'#D4D6D6'},borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>`Conversion: ${i.raw}%`,title:i=>`Discount level: ${i[0].label}`}}},scales:{x:{grid:{display:false},ticks:{color:'#5C5E5E',font:{size:12}},title:{display:true,text:'Discount level',color:'#606161',font:{size:11}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12},callback:v=>`${v}%`},min:0,max:28,title:{display:true,text:'Conversion rate',color:'#606161',font:{size:11}}}}}});
+  applyGlobalRange(G_START,G_END);
 }
 
 function initScrollSpy(){
@@ -5314,6 +5407,7 @@ function drApply(){
     if(row)row.querySelectorAll('.sp-range-item').forEach(i=>i.classList.remove('active'));
     a.classList.add('active');
   }
+  if(drSt.start&&drSt.end)applyGlobalRange(drSt.start,drSt.end);
   drClose();
 }
 // Close on outside click
