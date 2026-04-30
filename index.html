@@ -478,6 +478,10 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .ci-funnel-stat-val{font-size:20px;font-weight:600;color:#232424;line-height:1.2}
 .ci-funnel-stat-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .ci-funnel-stat-desc{font-size:12px;color:#606161;line-height:1.5;margin-top:4px}
+.cvt-kpi{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.cvt-kpi-row{display:flex;align-items:center;gap:8px}
+.cvt-kpi-val{font-size:24px;font-weight:700;color:#232424;line-height:1.1}
+.cvt-kpi-lbl{font-size:12px;color:#5C5E5E;margin-top:2px}
 .ci-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .ci-kpi-card{background:#fff;border:1px solid #EAECEC;border-radius:8px;padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
 .ci-kpi-accent{height:3px;position:absolute;top:0;left:0;right:0}
@@ -2111,6 +2115,32 @@ function buildCustomerInsights(){return`<div class="sp-page">
   </div>
 </div>
 
+<div class="sp-card-lg sp-anchor" id="sec-conv-trends" style="scroll-margin-top:16px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+    <div>
+      <div class="sp-sec-title">Conversion trends</div>
+      <div class="sp-sec-sub">Track how conversion rates change over time across each funnel stage</div>
+      <div class="sp-tabs" id="cvt-tabs" style="margin-top:12px">
+        <span class="sp-tab active" onclick="cvtTab(0)">Menu to order</span>
+        <span class="sp-tab" onclick="cvtTab(1)">Menu to basket</span>
+        <span class="sp-tab" onclick="cvtTab(2)">Basket to order</span>
+        <span class="sp-tab" onclick="cvtTab(3)">Impressions</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px">
+      <button class="sp-export-btn">Export</button>
+      <div class="cvt-kpi">
+        <div class="cvt-kpi-row">
+          <span id="cvt-kpi-val" class="cvt-kpi-val">27%</span>
+          <span id="cvt-kpi-tag">${tag('5%','down')}</span>
+        </div>
+        <div id="cvt-kpi-lbl" class="cvt-kpi-lbl">Menu to order rate</div>
+      </div>
+    </div>
+  </div>
+  <div class="sp-chart-wrap" style="height:280px"><canvas id="ci-chart-conv-trends"></canvas></div>
+</div>
+
 <div class="sp-card-lg sp-anchor" id="sec-no-customers" data-path="/analytics/customer/no-of-customers" style="scroll-margin-top:16px">
   <div class="ci-with-sidebar">
     <div>
@@ -2289,6 +2319,24 @@ function buildCustomerInsights(){return`<div class="sp-page">
 const DATES=['12 Jan','15 Jan','18 Jan','21 Jan','24 Jan','27 Jan','30 Jan','3 Feb','6 Feb','11 Feb'];
 const LINE_D=[11,10.2,2.5,1.9,2.2,2.1,1.7,2.3,2.2,1.8];
 
+const CVT_DATA=[
+  {val:'27%',dir:'down',pct:'5%',lbl:'Menu to order rate',        data:[28,26,25,27,26,28,27,25,28,27]},
+  {val:'37%',dir:'down',pct:'8%',lbl:'Menu to basket rate',       data:[38,36,40,37,35,39,38,36,37,37]},
+  {val:'50%',dir:'up',  pct:'3%',lbl:'Basket to order rate',      data:[52,50,54,51,49,53,50,51,52,50]},
+  {val:'65%',dir:'down',pct:'5%',lbl:'Impressions to menu rate',  data:[68,64,70,66,63,67,65,64,66,65]},
+];
+function cvtTab(idx){
+  document.querySelectorAll('#cvt-tabs .sp-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  const d=CVT_DATA[idx];
+  const valEl=document.getElementById('cvt-kpi-val');
+  const tagEl=document.getElementById('cvt-kpi-tag');
+  const lblEl=document.getElementById('cvt-kpi-lbl');
+  if(valEl)valEl.textContent=d.val;
+  if(tagEl)tagEl.innerHTML=tag(d.pct,d.dir);
+  if(lblEl)lblEl.textContent=d.lbl;
+  const ch=chartInstances['ci-chart-conv-trends'];
+  if(ch){ch.data.datasets[0].data=d.data;ch.update();}
+}
 function ordSalesTab(idx){
   document.querySelectorAll('#oss-tabs .sp-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   ['chart-orders','chart-orders-nrr','chart-orders-cplus'].forEach((id,i)=>{
@@ -2512,6 +2560,7 @@ function initCustCharts(){
   if(freqEl)chartInstances['ci-chart-freq']=new Chart(freqEl.getContext('2d'),{type:'bar',data:{labels:['1 order','2 orders','3–5 orders','6–10 orders','10+ orders'],datasets:[{data:[38,26,22,9,5],backgroundColor:['#336D65','#008470','#9DC9C3','#DCFAF5','#F0F5F4'],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>`${i.raw}% of customers`}}},scales:{x:{grid:{display:false},ticks:{color:'#5C5E5E',font:{size:12}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12},callback:v=>`${v}%`},min:0,max:45}}}});
   mkLine('ci-chart-reorder','Reorder rate %',[32,35,31,34,33,38,36,34,37,34],50,20);
   {const el=document.getElementById('ci-chart-imp-donut');if(el){const impCenterPlugin={id:'impCenter',afterDraw(chart){const{ctx,chartArea:{width,height,left,top}}=chart;const cx=left+width/2,cy=top+height/2;ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#232424';ctx.font='bold 15px Arial,sans-serif';ctx.fillText('45,200',cx,cy-8);ctx.fillStyle='#8A9099';ctx.font='11px Arial,sans-serif';ctx.fillText('total',cx,cy+10);ctx.restore()}};chartInstances['ci-chart-imp-donut']=new Chart(el.getContext('2d'),{type:'doughnut',plugins:[impCenterPlugin],data:{datasets:[{data:[68,32],backgroundColor:['#336D65','#9DC9C3'],borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>`${['Discovery','Search'][i.dataIndex]}: ${i.raw}%`}}}}})}}
+  {const el=document.getElementById('ci-chart-conv-trends');if(el){const ctx=el.getContext('2d');chartInstances['ci-chart-conv-trends']=new Chart(ctx,{type:'line',data:{labels:DATES,datasets:[{data:[28,26,25,27,26,28,27,25,28,27],borderColor:'#001942',borderWidth:2,pointBackgroundColor:'#fff',pointBorderColor:'#001942',pointRadius:4,pointHoverRadius:6,fill:true,backgroundColor:(c)=>{const g=c.chart.ctx.createLinearGradient(0,0,0,c.chart.height);g.addColorStop(0,'rgba(0,25,66,0.12)');g.addColorStop(1,'rgba(0,25,66,0.01)');return g},tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:i=>`${i.raw}%`}}},scales:{x:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12},callback:v=>`${v}%`},min:0,max:100}}}})}}
   const impLblEl=document.getElementById('ci-chart-imp-line');
   if(impLblEl)chartInstances['ci-chart-imp-line']=new Chart(impLblEl.getContext('2d'),{type:'line',data:{labels:DATES,datasets:[{label:'Impressions',data:[4200,3900,4800,5100,4600,5500,5300,4900,5200,5700],borderColor:'#336D65',borderWidth:2,backgroundColor:'rgba(51,109,101,0.08)',pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:'#336D65',fill:true,tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:11}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:11},callback:v=>v>=1000?`${v/1000}k`:v},min:3000,max:6500}}}});
   const discEl=document.getElementById('ci-chart-disc');
