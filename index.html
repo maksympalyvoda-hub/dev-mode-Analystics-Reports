@@ -307,11 +307,12 @@ a,button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;t
 .dr-bar{background:#fff;border:1px solid #F0F5F4;border-radius:8px;padding:12px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:16px;position:sticky;top:-24px;z-index:10;transition:box-shadow .18s,border-radius .18s,border-color .18s}
 .dr-sentinel{height:1px;margin-top:-1px;pointer-events:none}
 .dr-bar--stuck{border-radius:0;border-left:none;border-right:none;border-top:none;border-bottom:1px solid #E8ECEC;box-shadow:0 2px 12px rgba(0,0,0,.09);margin-left:-24px;margin-right:-24px;padding-left:40px;padding-right:40px}
-.dr-bar-top{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;position:relative}
+.dr-bar-top{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
 .dr-bar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .dr-bar-sep{width:1px;height:20px;background:#E0E3E3;flex-shrink:0;margin:0 4px}
-.dr-bar-info{font-size:14px;font-weight:600;color:#5C5E5E;line-height:20px;white-space:nowrap;display:flex;align-items:center;gap:6px;position:absolute;left:50%;transform:translateX(-50%);pointer-events:none}
+.dr-bar-info{font-size:14px;font-weight:600;color:#5C5E5E;line-height:20px;white-space:nowrap;display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0;pointer-events:none}
 .dr-bar-info:empty{display:none}
+.dr-bar-info.sp-compared{margin-bottom:0}
 .dr-bar-top--wrapped .dr-bar-info{padding-top:2px;white-space:normal}
 .dr-bar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 /* ── Graphs View dropdown (mirrors cmp-wrap style) ── */
@@ -1112,16 +1113,19 @@ const NAV=[
       ]},
       {id:'ops-q',lbl:'Operations Quality',children:[
         {id:'partner-cancel',lbl:'Avoidable cancellations',path:'/analytics/ops-quality/partner-cancellations'},
+        {id:'orders-defect',lbl:'Orders with defect',path:'/analytics/ops-quality/orders-with-defect'},
         {id:'defects',lbl:'Captain wait time',path:'/analytics/ops-quality/captain-wait-time'},
+        {id:'meal-prep',lbl:'Meal preparation time',path:'/analytics/ops-quality/meal-prep-time'},
+        {id:'pct-ready',lbl:'% marked ready',path:'/analytics/ops-quality/pct-marked-ready'},
         {id:'offline',lbl:'Offline time',path:'/analytics/ops-quality/offline-time'},
         {id:'outlet-perf',lbl:'Outlet comparison',path:'/analytics/ops-quality/outlet-performance'},
-        {id:'order-prep-eff',lbl:'Order preparation efficiency',path:'/analytics/ops-quality/order-prep-efficiency'},
         {id:'order-prep-bk',lbl:'Order preparation breakdown',path:'/analytics/ops-quality/order-prep-breakdown'},
         {id:'avg-accept',lbl:'Avg. acceptance time',path:'/analytics/ops-quality/avg-acceptance-time'},
       ]},
       {id:'cust',lbl:'Customer insights',children:[
         {id:'cust-breakdown',lbl:'Customer breakdown',path:'/analytics/customer/customer-breakdown'},
         {id:'cust-funnel',lbl:'Customer conversion funnel',path:'/analytics/customer/conversion-funnel'},
+        {id:'conv-trends',lbl:'Conversion trends',path:'/analytics/customer/conversion-trends'},
         {id:'ratings',lbl:'Ratings on food orders',path:'/analytics/customer/ratings-food-orders'},
         {id:'no-customers',lbl:'No. of customers',path:'/analytics/customer/no-of-customers'},
         {id:'order-freq',lbl:'Order frequency',path:'/analytics/customer/order-frequency'},
@@ -1151,11 +1155,11 @@ const NAV=[
 ];
 
 const SALES_PATHS=new Set(['/analytics/sales/orders-sales','/analytics/sales/gross-sales','/analytics/sales/avg-order-value','/analytics/sales/meal-breakdown','/analytics/sales/avg-order-mealtime','/analytics/sales/hourly-daily']);
-const PATH_TO_SEC={'/analytics/sales/orders-sales':'sec-orders-sales','/analytics/sales/gross-sales':'sec-gross-sales','/analytics/sales/avg-order-value':'sec-avg-order','/analytics/sales/meal-breakdown':'sec-meal-breakdown','/analytics/sales/avg-order-mealtime':'sec-meal-aov','/analytics/sales/hourly-daily':'sec-hourly-daily'};
-const OPS_PATHS=new Set(['/analytics/ops-quality/partner-cancellations','/analytics/ops-quality/orders-with-defect','/analytics/ops-quality/captain-wait-time','/analytics/ops-quality/outlet-performance','/analytics/ops-quality/order-prep-efficiency','/analytics/ops-quality/order-prep-breakdown','/analytics/ops-quality/avg-acceptance-time','/analytics/ops-quality/offline-time']);
-const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/orders-with-defect':'sec-orders-defect','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/offline-time':'sec-offline','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-efficiency':'sec-order-prep-eff','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept'};
-const CUST_PATHS=new Set(['/analytics/customer/customer-breakdown','/analytics/customer/no-of-customers','/analytics/customer/ratings-food-orders','/analytics/customer/conversion-funnel','/analytics/customer/order-frequency','/analytics/customer/reorder-rate','/analytics/customer/impressions','/analytics/customer/discount-impact','/analytics/customer/retention']);
-const PATH_TO_CUST_SEC={'/analytics/customer/customer-breakdown':'sec-cust-breakdown','/analytics/customer/conversion-funnel':'sec-cust-funnel','/analytics/customer/ratings-food-orders':'sec-ratings','/analytics/customer/no-of-customers':'sec-no-customers','/analytics/customer/order-frequency':'sec-order-freq','/analytics/customer/reorder-rate':'sec-reorder-rate','/analytics/customer/impressions':'sec-impressions','/analytics/customer/discount-impact':'sec-discount-impact','/analytics/customer/retention':'sec-retention'};
+const PATH_TO_SEC={'/analytics/sales/orders-sales':'sec-orders-sales','/analytics/sales/gross-sales':'sec-gross-sales','/analytics/sales/avg-order-value':'sec-orders-sales','/analytics/sales/meal-breakdown':'sec-meal-breakdown','/analytics/sales/avg-order-mealtime':'sec-meal-aov','/analytics/sales/hourly-daily':'sec-hourly-daily'};
+const OPS_PATHS=new Set(['/analytics/ops-quality/partner-cancellations','/analytics/ops-quality/orders-with-defect','/analytics/ops-quality/captain-wait-time','/analytics/ops-quality/meal-prep-time','/analytics/ops-quality/pct-marked-ready','/analytics/ops-quality/outlet-performance','/analytics/ops-quality/order-prep-breakdown','/analytics/ops-quality/avg-acceptance-time','/analytics/ops-quality/offline-time']);
+const PATH_TO_OPS_SEC={'/analytics/ops-quality/partner-cancellations':'sec-partner-cancel','/analytics/ops-quality/orders-with-defect':'sec-orders-defect','/analytics/ops-quality/captain-wait-time':'sec-defects','/analytics/ops-quality/meal-prep-time':'sec-meal-prep-time','/analytics/ops-quality/pct-marked-ready':'sec-pct-ready','/analytics/ops-quality/offline-time':'sec-offline','/analytics/ops-quality/outlet-performance':'sec-outlet-perf','/analytics/ops-quality/order-prep-breakdown':'sec-order-prep-bk','/analytics/ops-quality/avg-acceptance-time':'sec-avg-accept'};
+const CUST_PATHS=new Set(['/analytics/customer/customer-breakdown','/analytics/customer/no-of-customers','/analytics/customer/ratings-food-orders','/analytics/customer/conversion-funnel','/analytics/customer/conversion-trends','/analytics/customer/order-frequency','/analytics/customer/reorder-rate','/analytics/customer/impressions','/analytics/customer/discount-impact','/analytics/customer/retention']);
+const PATH_TO_CUST_SEC={'/analytics/customer/customer-breakdown':'sec-cust-breakdown','/analytics/customer/conversion-funnel':'sec-cust-funnel','/analytics/customer/conversion-trends':'sec-conv-trends','/analytics/customer/ratings-food-orders':'sec-ratings','/analytics/customer/no-of-customers':'sec-no-customers','/analytics/customer/order-frequency':'sec-order-freq','/analytics/customer/reorder-rate':'sec-reorder-rate','/analytics/customer/impressions':'sec-impressions','/analytics/customer/discount-impact':'sec-discount-impact','/analytics/customer/retention':'sec-retention'};
 
 let activePath='/dashboard',openL1=null,openL2=null,chartInstances={},scrollSpyCleanup=null;
 
@@ -1178,7 +1182,7 @@ function go(path){
       requestAnimationFrame(()=>{initCharts();initScrollSpy()});
     }
     const secId=PATH_TO_SEC[path];
-    setTimeout(()=>{const el=document.getElementById(secId);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},80);
+    setTimeout(()=>{const el=document.getElementById(secId);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(path==='/analytics/sales/avg-order-value')ossSegSwitch(2);},80);
   }else if(OPS_PATHS.has(path)){
     if(!wasOps||body.dataset.page!=='ops'){
       destroyCharts();if(scrollSpyCleanup){scrollSpyCleanup();scrollSpyCleanup=null}
@@ -1303,12 +1307,10 @@ const GV_DATA={
   'chart-orders':{daily:[82,76,91,88,95,108,97],weekly:[337,356,398,411],monthly:[1240,1380,1520,1460,1590,1720]},
   'chart-orders-nrr':{daily:[38,34,42,40,44,52,45],weekly:[154,168,188,195],monthly:[560,630,710,680,740,810]},
   'chart-orders-cplus':{daily:[24,22,28,26,30,36,31],weekly:[98,108,124,132],monthly:[360,410,460,440,490,540]},
-  'chart-aov':{daily:[42,39,44,41,43,47,45],weekly:[41.8,42.5,43.2,44.1],monthly:[39.5,40.8,42.2,41.6,43.0,44.5]},
+  'chart-oss-aov':{daily:[42,39,44,41,43,47,45],weekly:[41.8,42.5,43.2,44.1],monthly:[39.5,40.8,42.2,41.6,43.0,44.5]},
   'oq-chart-cancel':{daily:[[2,1,3,2,1,4,2],[1.2,0.6,1.8,1.2,0.6,2.4,1.2]],weekly:[[5,7,6,4],[2.0,2.8,2.4,1.6]],monthly:[[18,22,19,24,17,20],[1.8,2.2,1.9,2.4,1.7,2.0]]},
   'oq-chart-defects':{daily:[[3.2,2.8,4.1,3.6,2.4,3.8,3.1],[8,7,11,9,6,10,8]],weekly:[[3.8,4.2,3.1,4.5],[10,12,8,14]],monthly:[[4.1,3.6,4.8,3.2,4.4,3.9],[11,10,13,9,12,11]]},
-  'oq-chart-prep-eff':{daily:[2.1,1.8,2.4,2.2,1.9,2.6,2.0],weekly:[2.1,2.3,2.0,2.2],monthly:[2.4,2.6,2.3,2.5,2.1,2.2]},
   'oq-chart-accept':{daily:[1.2,0.9,1.4,1.1,0.8,1.5,1.0],weekly:[1.1,1.3,1.0,1.2],monthly:[1.3,1.4,1.2,1.5,1.1,1.2]},
-  'oq-chart-waittime':{daily:[1.2,0.9,1.5,1.1,0.8,1.3,1.0,1.4,1.1,0.9],weekly:[1.1,1.3,1.0,1.2],monthly:[1.3,1.4,1.2,1.5,1.1,1.2]},
   'oq-chart-mealprep':{daily:[14.5,14.0,13.8,15.2,14.8,13.6,14.1,14.4,13.9,14.2],weekly:[14.8,14.3,13.9,14.5],monthly:[15.1,14.8,14.3,14.6,13.9,14.2]}
 };
 const gvState={oss:'Daily',oq:'Daily'};
@@ -1324,10 +1326,9 @@ const CHART_META={
   'chart-orders':       {base:88,  vr:10, mn:55,  mx:130},
   'chart-orders-nrr':   {base:40,  vr:7,  mn:25,  mx:65},
   'chart-orders-cplus': {base:27,  vr:5,  mn:15,  mx:45},
-  'chart-aov':          {base:43,  vr:2.5,mn:36,  mx:52, dc:1},
+  'chart-oss-aov':      {base:43,  vr:2.5,mn:36,  mx:52, dc:1},
   'oq-chart-cancel':    {ml:[{b:2,v:0.8,mn:0,mx:8},{b:1.2,v:0.4,mn:0,mx:5,dc:1}]},
   'oq-chart-defects':   {ml:[{b:3.2,v:0.7,mn:1,mx:6,dc:1},{b:8,v:2,mn:3,mx:18}]},
-  'oq-chart-waittime':  {base:1.2, vr:0.3,mn:0,  mx:4,  dc:1},
   'oq-chart-accept':    {base:1.1, vr:0.2,mn:0,  mx:3,  dc:1},
   'oq-chart-mealprep':  {base:14.2,vr:0.8,mn:11, mx:18, dc:1},
   'oq-chart-owd':       {ml:[{b:25,v:5,mn:10,mx:50},{b:4,v:1,mn:1,mx:8,dc:1}]},
@@ -1437,8 +1438,8 @@ function gvUpdateCharts(wrap,view){
   const labels=_buildLabels(G_START,G_END,key);
   const n=labels.length;
   const ids=section==='oss'
-    ?['chart-orders','chart-orders-nrr','chart-orders-cplus','chart-aov']
-    :['oq-chart-cancel','oq-chart-defects','oq-chart-accept','oq-chart-waittime','oq-chart-mealprep'];
+    ?['chart-orders','chart-orders-nrr','chart-orders-cplus','chart-oss-aov']
+    :['oq-chart-cancel','oq-chart-defects','oq-chart-accept','oq-chart-mealprep','oq-chart-owd'];
   ids.forEach(id=>{
     const ch=chartInstances[id];
     const meta=CHART_META[id];
@@ -1847,7 +1848,7 @@ function buildOpsQuality(){
 </div>
 
 <div class="oq-def-row">
-<div class="sp-card-lg sp-anchor" id="sec-meal-prep-time" style="scroll-margin-top:16px">
+<div class="sp-card-lg sp-anchor" id="sec-meal-prep-time" data-path="/analytics/ops-quality/meal-prep-time" style="scroll-margin-top:16px">
   <div class="sp-sec-top">
     <div class="sp-sec-left">
       <div><div class="sp-sec-title">Meal preparation time</div><div class="sp-sec-sub">Average time from order receipt to kitchen ready</div></div>
@@ -1865,7 +1866,7 @@ function buildOpsQuality(){
     <div class="sp-legend-item"><div class="sp-legend-dot"></div>Prep time: 12 Jan – 11 Feb</div>
   </div>
 </div>
-<div class="sp-card-lg">
+<div class="sp-card-lg sp-anchor" id="sec-pct-ready" data-path="/analytics/ops-quality/pct-marked-ready" style="scroll-margin-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
     <div class="sp-sec-title">% marked ready</div>
     <button class="sp-export-btn">Export</button>
@@ -2205,7 +2206,7 @@ function buildCustomerInsights(){return`<div class="sp-page">
   </div>
 </div>
 
-<div class="sp-card-lg sp-anchor" id="sec-conv-trends" style="scroll-margin-top:16px">
+<div class="sp-card-lg sp-anchor" id="sec-conv-trends" data-path="/analytics/customer/conversion-trends" style="scroll-margin-top:16px">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
     <div>
       <div class="sp-sec-title">Conversion trends</div>
@@ -2441,7 +2442,7 @@ function ordSalesTab(idx){
 function initCharts(){
   const mkLine=(id,lbl)=>{const el=document.getElementById(id);if(!el)return;const ctx=el.getContext('2d');chartInstances[id]=new Chart(ctx,{type:'line',data:{labels:DATES,datasets:[{data:LINE_D,borderColor:'#001942',borderWidth:2,pointBackgroundColor:'#fff',pointBorderColor:'#001942',pointRadius:4,pointHoverRadius:6,fill:true,backgroundColor:(c)=>{const g=c.chart.ctx.createLinearGradient(0,0,0,c.chart.height);g.addColorStop(0,'rgba(0,25,66,0.12)');g.addColorStop(1,'rgba(0,25,66,0.01)');return g},tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:i=>`${lbl}: ${i.raw}`}}},scales:{x:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12}},min:0,max:13}}}})};
   mkLine('chart-orders','Orders');
-  mkLine('chart-aov','AED');
+  mkLine('chart-oss-aov','AED');
   {const el=document.getElementById('chart-oss-aov');if(el){const ctx=el.getContext('2d');chartInstances['chart-oss-aov']=new Chart(ctx,{type:'line',data:{labels:DATES,datasets:[{data:[42,39,44,41,43,47,45,43,46,44],borderColor:'#00342C',borderWidth:2,pointBackgroundColor:'#fff',pointBorderColor:'#00342C',pointRadius:4,pointHoverRadius:6,fill:true,backgroundColor:(c)=>{const g=c.chart.ctx.createLinearGradient(0,0,0,c.chart.height);g.addColorStop(0,'rgba(0,52,44,0.12)');g.addColorStop(1,'rgba(0,52,44,0.01)');return g},tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:i=>`AED ${i.raw}`}}},scales:{x:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12}}},y:{grid:{color:'#F0F5F4'},ticks:{color:'#5C5E5E',font:{size:12},callback:v=>`AED ${v}`},min:35,max:52}}}})}}
   // NRR breakdown — 3 series: New / Retained / Reactivated
   const nrrEl=document.getElementById('chart-orders-nrr');
@@ -2553,8 +2554,6 @@ function initOpsCharts(){
       }
     }
   })}
-  mkOqLine('oq-chart-prep-eff','Delays %',[2.1,1.8,3.2,2.4,1.9,2.8,1.5,2.2,2.6,2.0],6);
-  mkOqLine('oq-chart-waittime','Wait time (min)',[1.2,0.9,1.5,1.1,0.8,1.3,1.0,1.4,1.1,0.9],4);
   mkOqLine('oq-chart-accept','Acceptance time (min)',[1.2,0.9,1.5,1.1,0.8,1.3,1.0,1.4,1.1,0.9],4);
   mkOqLine('oq-chart-mealprep','Prep time (min)',[14.5,14.0,13.8,15.2,14.8,13.6,14.1,14.4,13.9,14.2],20);
   // % marked ready donut
